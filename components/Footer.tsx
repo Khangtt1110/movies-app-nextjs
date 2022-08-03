@@ -3,7 +3,13 @@ import HdIcon from "@mui/icons-material/Hd";
 import HomeIcon from "@mui/icons-material/Home";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import {
+    BottomNavigation,
+    BottomNavigationAction,
+    createTheme,
+    makeStyles,
+    Theme,
+} from "@mui/material";
 
 import { useRouter } from "next/router";
 import styles from "./footer.module.scss";
@@ -15,6 +21,7 @@ export interface Footer {
     icon: any;
     path: string;
 }
+
 // List options
 const listFooter: Footer[] = [
     {
