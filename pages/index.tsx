@@ -1,20 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import { Movies } from "../models";
-import moviesApi from "./api/moviesApi";
+import MovieList from "../components/movieList";
 
+import styles from "./home.module.scss";
+import { MovieType } from "../models/movies";
 const Home: NextPage = () => {
-    const [moviesData, setMoviesData] = useState<Movies[]>();
-    useEffect(() => {
-        async function getList() {
-            const response = await moviesApi.getMoviePopular();
-            setMoviesData(response.results);
-        }
-        getList();
-    }, []);
-
-    console.log(moviesData);
     return (
         <div>
             <Head>
@@ -23,11 +13,12 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                {moviesData?.map((item) => (
-                    <div key={item.id}>
-                        <h1>{item.title}</h1>
-                    </div>
-                ))}
+                <div className={styles.container}>
+                    <MovieList title="What's Popular" type={MovieType.popular} />
+                    <MovieList title="Top Rate Movies" type={MovieType.top_rated} />
+                    <MovieList title="Upcoming Movies" type={MovieType.upcoming} />
+                    {/* <MovieList /> */}
+                </div>
             </main>
         </div>
     );

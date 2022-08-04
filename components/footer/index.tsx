@@ -13,7 +13,7 @@ import {
 
 import { useRouter } from "next/router";
 import styles from "./footer.module.scss";
-import { ACTORS_PATH, HOME_PATH, MOVIES_PATH, TV_SHOW_PATH } from "../models/path";
+import { ACTORS_PATH, HOME_PATH, MOVIES_PATH, TV_SHOW_PATH } from "../../models/path";
 
 export interface Footer {
     title: string;

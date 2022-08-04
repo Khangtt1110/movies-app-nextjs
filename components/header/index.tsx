@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useState } from "react";
-import { PROFILE_PATH } from "../models";
+import { PROFILE_PATH } from "../../models";
 
 import styles from "./header.module.scss";
 
