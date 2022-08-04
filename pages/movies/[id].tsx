@@ -11,17 +11,17 @@ type Props = {
     id: number;
 };
 
-const MoviesDetail = (props: Props) => {
+const MoviesDetail = () => {
     const [movieData, setMovieData] = useState<MovieDetail>();
     const movieDetail = useAppSelector(selectMovieDetail);
     useEffect(() => {
-        const getMovieDetail = async () => {
-            const response = await moviesApi.getMovieDetail(props.category, props.id);
-            setMovieData(response);
-        };
-        getMovieDetail();
-    }, [props.category, props.id]);
-    console.log("movieDetail", movieDetail);
+        // const getMovieDetail = async () => {
+        //     const response = await moviesApi.getMovieDetail(props.category, props.id);
+        //     setMovieData(response);
+        // };
+        // getMovieDetail();
+    }, [movieDetail]);
+    console.log("id", movieDetail.id, movieDetail.category);
 
     return <div>MoviesDetail</div>;
 };

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import MovieList from "../components/movieList";
+import MovieList from "../components/movieList/movieList";
 
 import styles from "./home.module.scss";
 import { MovieType } from "../models/movies";
