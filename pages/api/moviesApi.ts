@@ -1,10 +1,6 @@
 import { Category, ListResponse, Movies, TvType } from "../../models";
 import axiosClient from "./apiClient";
-
-export const category: Category = {
-    movie: "movie",
-    tv: "tv",
-};
+import { MovieDetail } from "../../models/movies";
 
 export const tvType: TvType = {
     popular: "popular",
@@ -15,6 +11,10 @@ export const tvType: TvType = {
 const moviesApi = {
     getMovieList(type: string): Promise<ListResponse<Movies>> {
         const url = "movie/" + type;
+        return axiosClient.get(url, { params: {} });
+    },
+    getMovieDetail(cate: string, id: number): Promise<MovieDetail> {
+        const url = cate + "/" + id;
         return axiosClient.get(url, { params: {} });
     },
 };

@@ -17,7 +17,6 @@ const Home: NextPage = () => {
                     <MovieList title="What's Popular" type={MovieType.popular} />
                     <MovieList title="Top Rate Movies" type={MovieType.top_rated} />
                     <MovieList title="Upcoming Movies" type={MovieType.upcoming} />
-                    {/* <MovieList /> */}
                 </div>
             </main>
         </div>
