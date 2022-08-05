@@ -68,14 +68,12 @@ const MovieList = (params: Props) => {
                         onClick={handleSlideClick(item.id, item.title)}
                     >
                         <Image
-                            src={apiConfig.originalImage(item.poster_path)}
+                            src={apiConfig.originalImage(item.poster_path) || ""}
                             className={styles.image}
                             alt=""
                             width={105}
                             height={150}
                         />
-                        {/* <div className={styles.average}>{item.vote_average}</div> */}
-
                         <div className={styles.name}>{overText(item.title, 15)}</div>
                         <div className={styles.date}>{stringToDate(item.release_date)}</div>
                     </SwiperSlide>

@@ -10,6 +10,8 @@ import moviesApi from "../api/moviesApi";
 import { convertTime } from "../../common/overText";
 import styles from "./movieDetail.module.scss";
 import CastList from "../../components/castList/catsList";
+import React from "react";
+import TrailerVideo from "../../components/trailerVideo/trailerVideo";
 
 const MoviesDetail = () => {
     const router = useRouter();
@@ -32,8 +34,9 @@ const MoviesDetail = () => {
             const response = await moviesApi.getMovieDetail(movieDetail.category, movieDetail.id);
             setMovieData(response);
         };
-        getMovieDetail();
+        movieDetail && getMovieDetail();
     }, [movieDetail, router]);
+    // console.log(movieData);
 
     return (
         <div className={styles.container}>
@@ -55,6 +58,7 @@ const MoviesDetail = () => {
                 <div>{movieData?.overview}</div>
                 <div className={styles.title}>Casts</div>
                 <CastList category={movieDetail.category} id={movieDetail.id} />
+                <TrailerVideo />
             </div>
         </div>
     );
