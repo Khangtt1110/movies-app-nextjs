@@ -24,12 +24,11 @@ const CastList = (props: Props) => {
         getCastData();
     }, [props.category, props.id]);
 
-    console.log("castList: ", castList);
     return (
         <div className={styles.container}>
             <Swiper
-                slidesPerView={3}
-                spaceBetween={20}
+                slidesPerView={4}
+                spaceBetween={10}
                 autoplay={{ delay: 3000 }}
                 pagination={{
                     clickable: true,
@@ -44,16 +43,18 @@ const CastList = (props: Props) => {
                         // onClick={handleSlideClick(item.id, item.title)}
                     >
                         <Image
-                            src={apiConfig.originalImage(item.profile_path)}
+                            src={
+                                item.profile_path === undefined
+                                    ? ""
+                                    : apiConfig.originalImage(item.profile_path)
+                            }
                             className={styles.image}
                             alt=""
                             width={105}
                             height={150}
                         />
-                        {/* <div className={styles.average}>{item.vote_average}</div> */}
 
-                        {/* <div className={styles.name}>{overText(item.title, 15)}</div>
-                        <div className={styles.date}>{stringToDate(item.release_date)}</div> */}
+                        <div className={styles.name}>{item.name}</div>
                     </SwiperSlide>
                 ))}
             </Swiper>

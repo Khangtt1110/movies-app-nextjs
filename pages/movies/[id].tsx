@@ -18,8 +18,8 @@ const MoviesDetail = () => {
     const movieDetail = useAppSelector<MovieDetailState>(selectMovieDetail);
     // get image path
     const background = useMemo(
-        () => apiConfig.originalImage(movieData?.poster_path as string),
-        [movieData?.poster_path],
+        () => (movieData ? apiConfig.originalImage(movieData?.poster_path as string) : ""),
+        [movieData],
     );
     // fetch data
     useEffect(() => {
