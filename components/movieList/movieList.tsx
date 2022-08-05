@@ -39,15 +39,14 @@ const MovieList = (params: Props) => {
     /**
      * handle pass category and id
      */
-    const handleSlideClick = (id: number) => () => {
+    const handleSlideClick = (id: number, title: string) => () => {
         const movieType = {
             category: Category.movie,
             id: id,
         };
         dispatch(setDetailState(movieType));
-        router.push(`${MOVIES_PATH}/${id}`);
+        router.push(`${MOVIES_PATH}/${title}`);
     };
-    // console.log(moviesData);
 
     return (
         <div className={styles.container}>
@@ -65,15 +64,15 @@ const MovieList = (params: Props) => {
                 {moviesData?.map((item) => (
                     <SwiperSlide
                         key={item.id}
-                        className={styles.slide}
-                        onClick={handleSlideClick(item.id)}
+                        className={styles.slice}
+                        onClick={handleSlideClick(item.id, item.title)}
                     >
                         <Image
                             src={apiConfig.originalImage(item.poster_path)}
                             className={styles.image}
                             alt=""
                             width={105}
-                            height={180}
+                            height={150}
                         />
                         {/* <div className={styles.average}>{item.vote_average}</div> */}
 

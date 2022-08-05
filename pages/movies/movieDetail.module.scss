@@ -1,23 +1,57 @@
+@use "../../styles/variables" as *;
+
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 1rem;
-
-    .title {
-        text-align: center;
-        font-size: 25px;
-        font-weight: bolder;
-    }
+    // opacity: 0.5;
 
     .poster {
-        margin: 1rem;
-        & > img {
-            border-radius: 10px;
-        }
+        height: 40vh;
+        width: 100vw;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
+    .swapper {
+        margin-top: -30px;
+        border-radius: 30px;
+        background-color: $primary-color;
+        min-height: 60vh;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .name {
+        font-size: 25px;
+        font-weight: bolder;
+        margin: 0;
+    }
     .description {
-        margin: 1rem;
+        display: flex;
+        font-size: 10px;
+        margin-top: 0.5rem;
+
+        .date {
+            padding-right: 10px;
+            border-right: 1.7px solid $main-color;
+        }
+
+        .types {
+            display: flex;
+            margin-left: 10px;
+
+            .element {
+                margin: 0 5px;
+            }
+        }
+    }
+    .title {
+        margin: 15px 0 5px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .overview {
+        margin-top: -10px;
     }
 }
