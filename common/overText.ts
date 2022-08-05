@@ -16,8 +16,11 @@ export const stringToDate = (params: string) => {
 
 export const convertTime = (props: number) => {
     let data = "";
-    if (props > 60) {
-        data = String(Math.floor(props / 60)) + "h " + String(props % 60) + "m";
+    if (props <= 60) {
+        return data = String(props) + 'm'
     }
+    data = String(Math.floor(props / 60)) + "h " + String(props % 60) + "m";
     return data;
 };
+
+
