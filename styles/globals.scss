@@ -24,15 +24,22 @@ a {
     box-sizing: border-box;
 }
 
-// @media (prefers-color-scheme: dark) {
-//     html {
-//         color-scheme: dark;
-//     }
-//     body {
-//         color: white;
-//         background: black;
-//     }
-// }
+.Mui-selected {
+    color: white;
+    & > svg {
+        color: white;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark;
+    }
+    body {
+        color: white;
+        background: black;
+    }
+}
 
 // .container {
 //     max-width: 80%;

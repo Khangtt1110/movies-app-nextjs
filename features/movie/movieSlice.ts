@@ -1,17 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface MovieDetailState {
-    detail: {
-        category: string;
-        id: number;
-    };
+    category: string;
+    id: number;
 }
 
 const initialState: MovieDetailState = {
-    detail: {
-        category: "",
-        id: 0,
-    },
+    category: "",
+    id: 0,
 };
 
 export const movieSlice = createSlice({
@@ -19,14 +15,12 @@ export const movieSlice = createSlice({
     initialState,
     reducers: {
         setDetailState: (state: MovieDetailState, { payload }: PayloadAction<any>) => {
-            return {
-                ...state,
-                detail: payload,
-            };
+            state.id = payload.id;
+            state.category = payload.category;
         },
     },
 });
 
 export const { setDetailState } = movieSlice.actions;
-export const selectMovieDetail = (state: any) => state.movie.detail;
+export const selectMovieDetail = (state: any) => state.movie;
 export default movieSlice.reducer;

@@ -14,8 +14,8 @@ import { useRouter } from "next/router";
 import { MOVIES_PATH } from "../../models/path";
 import Link from "next/link";
 import { Category } from "../../models/movies";
-import { useAppDispatch } from "../../redux/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
+import { useAppDispatch } from "../../features/hooks";
 
 type Props = {
     title: string;
@@ -36,7 +36,9 @@ const MovieList = (params: Props) => {
         }
         getList();
     }, [params.type]);
-
+    /**
+     * handle pass category and id
+     */
     const handleSlideClick = (id: number) => () => {
         const movieType = {
             category: Category.movie,
@@ -45,6 +47,7 @@ const MovieList = (params: Props) => {
         dispatch(setDetailState(movieType));
         router.push(`${MOVIES_PATH}/${id}`);
     };
+    // console.log(moviesData);
 
     return (
         <div className={styles.container}>

@@ -75,99 +75,104 @@ export default function Header() {
     const mobileMenuId = "primary-search-account-menu-mobile";
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                        onClick={handleMenuClick}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: "none", sm: "block" } }}
-                    >
-                        MUI
-                    </Typography>
-                    <div className={styles["search-wrapper"]}>
-                        <div className={styles["search-input"]}>
-                            <SearchIcon />
+        <div className={styles.container}>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar
+                    position="static"
+                    sx={{ background: "#e21938", borderRadius: "0 0 5px 5px" }}
+                >
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            sx={{ mr: 2 }}
+                            onClick={handleMenuClick}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: { xs: "none", sm: "block" } }}
+                        >
+                            MUI
+                        </Typography>
+                        <div className={styles["search-wrapper"]}>
+                            <div className={styles["search-input"]}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                inputProps={{ "aria-label": "search" }}
+                                className={styles["search-placeholder"]}
+                            />
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            inputProps={{ "aria-label": "search" }}
-                            className={styles["search-placeholder"]}
-                        />
-                    </div>
-                    <Box sx={{ flexGrow: 1 }} />
-                    {/* navbar */}
-                    <Box component="nav">
-                        <Drawer
-                            variant="temporary"
-                            open={menuPopup}
-                            onClose={handleMenuClick}
-                            ModalProps={{
-                                keepMounted: true, // Better open performance on mobile.
-                            }}
-                            sx={{
-                                display: { xs: "block", sm: "none" },
-                                "& .MuiDrawer-paper": {
-                                    boxSizing: "border-box",
-                                    width: navbarWidth,
-                                },
-                            }}
-                        >
-                            {navbar}
-                        </Drawer>
-                    </Box>
-                    <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </Box>
-                    <Box sx={{ display: { xs: "flex", md: "none" } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileClick}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-        </Box>
+                        <Box sx={{ flexGrow: 1 }} />
+                        {/* navbar */}
+                        <Box component="nav">
+                            <Drawer
+                                variant="temporary"
+                                open={menuPopup}
+                                onClose={handleMenuClick}
+                                ModalProps={{
+                                    keepMounted: true, // Better open performance on mobile.
+                                }}
+                                sx={{
+                                    display: { xs: "block", sm: "none" },
+                                    "& .MuiDrawer-paper": {
+                                        boxSizing: "border-box",
+                                        width: navbarWidth,
+                                    },
+                                }}
+                            >
+                                {navbar}
+                            </Drawer>
+                        </Box>
+                        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                                <Badge badgeContent={4} color="error">
+                                    <MailIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={17} color="error">
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </Box>
+                        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileClick}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </Box>
+                    </Toolbar>
+                </AppBar>
+            </Box>
+        </div>
     );
 }
