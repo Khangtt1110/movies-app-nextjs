@@ -11,11 +11,12 @@ import CallBackButton from "../components/callBackButton/callBackButton";
 function MyApp({ Component, pageProps }: AppProps) {
     const [headerLog, setHeaderLog] = useState(false);
     const router = useRouter();
+    // check router pathname
     useEffect(() => {
-        if (router.pathname === "/") {
-            setHeaderLog(true);
-        } else {
+        if (router.pathname.split("/").length > 2) {
             setHeaderLog(false);
+        } else {
+            setHeaderLog(true);
         }
     }, [router.pathname]);
     return (

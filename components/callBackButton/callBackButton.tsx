@@ -3,10 +3,9 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import styles from "./callBackButton.module.scss";
 
-type Props = {};
-
-const CallBackButton = (props: Props) => {
+const CallBackButton = () => {
     const router = useRouter();
+    // redirect to back page when click button
     const handleCallBackClick = useCallback(() => {
         router.back();
     }, [router]);
