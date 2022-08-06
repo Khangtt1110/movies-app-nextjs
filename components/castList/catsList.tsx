@@ -29,11 +29,10 @@ const CastList = (props: Props) => {
             <Swiper
                 slidesPerView={4}
                 spaceBetween={10}
-                autoplay={{ delay: 3000 }}
                 pagination={{
                     clickable: true,
                 }}
-                modules={[Pagination, Autoplay]}
+                modules={[Pagination]}
                 className={styles.wrapper}
             >
                 {castList?.map((item) => (

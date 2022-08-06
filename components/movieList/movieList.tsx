@@ -8,14 +8,13 @@ import { overText, stringToDate } from "../../common/overText";
 import apiConfig from "../../pages/api/apiConfig";
 
 import Image from "next/image";
-import "swiper/css";
-import styles from "./movieList.module.scss";
 import { useRouter } from "next/router";
-import { MOVIES_PATH } from "../../models/path";
-import Link from "next/link";
-import { Category } from "../../models/movies";
-import { setDetailState } from "../../features/movie/movieSlice";
 import { useAppDispatch } from "../../features/hooks";
+import { setDetailState } from "../../features/movie/movieSlice";
+import { Category } from "../../models/movies";
+import { MOVIES_PATH } from "../../models/path";
+import styles from "./movieList.module.scss";
+import "swiper/css";
 
 type Props = {
     title: string;
