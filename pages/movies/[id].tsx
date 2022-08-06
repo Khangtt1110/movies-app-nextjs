@@ -58,6 +58,7 @@ const MoviesDetail = () => {
                 <div>{movieData?.overview}</div>
                 <div className={styles.title}>Casts</div>
                 <CastList category={movieDetail.category} id={movieDetail.id} />
+                <div className={styles.title}>Trailer</div>
                 <TrailerVideo />
             </div>
         </div>

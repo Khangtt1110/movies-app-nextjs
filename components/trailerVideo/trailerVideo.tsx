@@ -5,23 +5,30 @@ import { MovieDetailState, selectMovieDetail } from "../../features/movie/movieS
 import moviesApi from "../../pages/api/moviesApi";
 import { Video } from "../../models";
 
+import styles from "./trailerVideo.module.scss";
+
 const TrailerVideo = () => {
     const [videoData, setVideoData] = useState<Video[]>([]);
     const movieDetail = useAppSelector<MovieDetailState>(selectMovieDetail);
     useEffect(() => {
+        // fetch api
         const getVideo = async () => {
             const response = await moviesApi.getTrailerVideo(movieDetail.category, movieDetail.id);
+            // get 4 video from api
             setVideoData(response.results.slice(0, 4));
         };
-        movieDetail && getVideo();
+        // check reload page
+        if (movieDetail.id !== 0) {
+            getVideo();
+        }
     }, [movieDetail, movieDetail.category, movieDetail.id]);
-    console.log("videoData", videoData);
 
     return (
-        <div>
+        <div className={styles.container}>
             {videoData &&
                 videoData.map((item) => (
-                    <div key={item.id} style={{ width: 200, height: 200 }}>
+                    <div key={item.id} className={styles.video}>
+                        <h1 className={styles.title}>{item.name}</h1>
                         <Iframe url={`http://www.youtube.com/embed/${item?.key}`} />
                     </div>
                 ))}

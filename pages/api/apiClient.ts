@@ -6,6 +6,7 @@ const axiosClient = axios.create({
     baseURL: apiConfig.baseUrl,
     headers: {
         "Content-Type": "application/json",
+        // "Set-Cookie": "cross-site-cookie=whatever",
     },
     paramsSerializer: (params) => queryString.stringify({ ...params, api_key: apiConfig.apiKey }),
 });
