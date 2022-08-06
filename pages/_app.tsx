@@ -6,6 +6,7 @@ import "../styles/globals.scss";
 import { store } from "../features/store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import CallBackButton from "../components/callBackButton/callBackButton";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [headerLog, setHeaderLog] = useState(false);
@@ -20,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider store={store}>
             <div className="container">
-                {headerLog && <Header />}
+                {headerLog ? <Header /> : <CallBackButton />}
                 <Component {...pageProps} />
                 <Footer />
             </div>

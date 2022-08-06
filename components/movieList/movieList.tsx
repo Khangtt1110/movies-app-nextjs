@@ -54,6 +54,7 @@ const MovieList = (params: Props) => {
             <Swiper
                 slidesPerView={3}
                 spaceBetween={20}
+                loop={true}
                 autoplay={{ delay: 3000 }}
                 pagination={{
                     clickable: true,
