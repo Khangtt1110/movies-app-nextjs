@@ -79,8 +79,8 @@ export enum MovieType {
     top_rated = "top_rated",
 }
 
-export enum TvType {
-    upcoming = "upcoming",
+export enum TvShowType {
+    popular = "popular",
     on_the_air = "on_the_air",
     top_rated = "top_rated",
 }

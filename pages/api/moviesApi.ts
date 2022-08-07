@@ -1,4 +1,4 @@
-import { Casts, Category, ListResponse, ListResponseCast, ListResponseVideo, Movies, TvType, Video } from "../../models";
+import { Casts, Category, ListResponse, ListResponseCast, ListResponseVideo, Movies, TvShowType, Video } from "../../models";
 import axiosClient from "./apiClient";
 import { MovieDetail, TvShows } from "../../models/movies";
 
@@ -11,8 +11,8 @@ const moviesApi = {
         const url = "tv/" + type;
         return axiosClient.get(url, { params: {} });
     },
-    getTvShowList2(type: string, param: object): Promise<ListResponse<TvShows>> {
-        const url = "tv/" + type;
+    getTvShowList2(cate: string, type: string, param: object): Promise<ListResponse<TvShows>> {
+        const url =  cate + "/" + type;
         return axiosClient.get(url, param);
     },
     getMovieDetail(cate: string, id: number): Promise<MovieDetail> {
