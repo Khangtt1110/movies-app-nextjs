@@ -14,6 +14,23 @@ export interface Movies {
     vote_average: number;
     vote_count: number;
 }
+export interface TvShows {
+    backdrop_path: string;
+    first_air_date: string
+    genre_ids: [];
+    id: number;
+    name: string;
+    origin_country: []
+    original_language: string;
+    original_name: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    vote_average: number;
+    vote_count: number;
+}
+
+
 
 export interface MovieDetail {
     adult: boolean;
@@ -62,10 +79,10 @@ export enum MovieType {
     top_rated = "top_rated",
 }
 
-export interface TvType {
-    popular: string;
-    top_rated: string;
-    on_the_air: string;
+export enum TvType {
+    upcoming = "upcoming",
+    on_the_air = "on_the_air",
+    top_rated = "top_rated",
 }
 
 export enum Category {

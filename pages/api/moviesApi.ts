@@ -1,17 +1,19 @@
 import { Casts, Category, ListResponse, ListResponseCast, ListResponseVideo, Movies, TvType, Video } from "../../models";
 import axiosClient from "./apiClient";
-import { MovieDetail } from "../../models/movies";
-
-export const tvType: TvType = {
-    popular: "popular",
-    top_rated: "top_rated",
-    on_the_air: "on_the_air",
-};
+import { MovieDetail, TvShows } from "../../models/movies";
 
 const moviesApi = {
     getMovieList(type: string): Promise<ListResponse<Movies>> {
         const url = "movie/" + type;
         return axiosClient.get(url, { params: {} });
+    },
+    getTvShowList(type: string): Promise<ListResponse<TvShows>> {
+        const url = "tv/" + type;
+        return axiosClient.get(url, { params: {} });
+    },
+    getTvShowList2(type: string, param: object): Promise<ListResponse<TvShows>> {
+        const url = "tv/" + type;
+        return axiosClient.get(url, param);
     },
     getMovieDetail(cate: string, id: number): Promise<MovieDetail> {
         const url = cate + "/" + id;
@@ -25,6 +27,10 @@ const moviesApi = {
         const url = cate + '/' + id + '/videos';
         return axiosClient.get(url, { params: {} });
     },
+    search: (cate: string, params: any): Promise<ListResponse<Movies>> => {
+        const url = 'search/' + cate
+        return axiosClient.get(url, params)
+    }
 };
 
 export default moviesApi;

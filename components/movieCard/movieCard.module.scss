@@ -1,0 +1,17 @@
+.container {
+    margin-bottom: 10px;
+
+    .image {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        justify-content: space-evenly;
+        width: 150px;
+        height: 200px;
+        border-radius: 10px;
+    }
+
+    .title {
+        text-align: center;
+    }
+}

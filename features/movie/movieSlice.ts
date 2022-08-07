@@ -18,9 +18,13 @@ export const movieSlice = createSlice({
             state.id = payload.id;
             state.category = payload.category;
         },
+        setCategory: (state: MovieDetailState, {payload}: PayloadAction<any> ) => {
+            state.category = payload
+        }
     },
 });
 
-export const { setDetailState } = movieSlice.actions;
+export const { setDetailState, setCategory } = movieSlice.actions;
 export const selectMovieDetail = (state: any) => state.movie;
+export const selectCategory = (state: any) => state.movie.category;
 export default movieSlice.reducer;

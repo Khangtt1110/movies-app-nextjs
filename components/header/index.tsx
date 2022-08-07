@@ -1,3 +1,4 @@
+import * as React from "react";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,18 +14,22 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import * as React from "react";
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { PROFILE_PATH } from "../../models";
 
 import styles from "./header.module.scss";
+import { Redirect } from "next";
+import { useAppSelector } from "../../features/hooks";
+import { MovieDetailState, selectMovieDetail } from "../../features/movie/movieSlice";
 
 export default function Header() {
     const router = useRouter();
+    const movieDetail = useAppSelector<MovieDetailState>(selectMovieDetail);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const [menuPopup, setMenuPopup] = useState(false);
     const navItems = ["Home", "About", "Contact"];
+    const [searchValue, setSearchValue] = useState("");
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -70,6 +75,20 @@ export default function Header() {
         router.push(`${PROFILE_PATH}${Math.random().toString}`);
     };
 
+    // set key value
+    const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setSearchValue(event.target.value);
+    };
+
+    const handleSearch = useCallback(
+        (event: React.FormEvent<HTMLElement>) => {
+            // if (searchValue.length > 0) {
+            //     router.push(`movie/search/` + 12);
+            // }
+        },
+        [movieDetail.category, router, searchValue],
+    );
+
     const menuId = "primary-search-account-menu";
 
     const mobileMenuId = "primary-search-account-menu-mobile";
@@ -100,7 +119,7 @@ export default function Header() {
                         >
                             MUI
                         </Typography>
-                        <div className={styles["search-wrapper"]}>
+                        <form className={styles["search-wrapper"]} onSubmit={handleSearch}>
                             <div className={styles["search-input"]}>
                                 <SearchIcon />
                             </div>
@@ -108,8 +127,9 @@ export default function Header() {
                                 placeholder="Search…"
                                 inputProps={{ "aria-label": "search" }}
                                 className={styles["search-placeholder"]}
+                                onChange={handleChangeValue}
                             />
-                        </div>
+                        </form>
                         <Box sx={{ flexGrow: 1 }} />
                         {/* navbar */}
                         <Box component="nav">
