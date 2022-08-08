@@ -16,11 +16,11 @@ export interface Movies {
 }
 export interface TvShows {
     backdrop_path: string;
-    first_air_date: string
+    first_air_date: string;
     genre_ids: [];
     id: number;
     name: string;
-    origin_country: []
+    origin_country: [];
     original_language: string;
     original_name: string;
     overview: string;
@@ -29,8 +29,6 @@ export interface TvShows {
     vote_average: number;
     vote_count: number;
 }
-
-
 
 export interface MovieDetail {
     adult: boolean;
@@ -89,3 +87,5 @@ export enum Category {
     movie = "movie",
     tv = "tv",
 }
+
+export interface CategoryData extends Movies, TvShows {}

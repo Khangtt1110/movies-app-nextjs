@@ -1,13 +1,13 @@
-import Image from "next/image";
-import React, { useMemo } from "react";
-import { Movies, TvShows } from "../../models";
+import { useMemo } from "react";
+import { overText } from "../../common/overText";
+import { CategoryData } from "../../models";
 import apiConfig from "../../pages/api/apiConfig";
 
 import styles from "./movieCard.module.scss";
 
 type Props = {
     key: number;
-    item: Movies | TvShows;
+    item: CategoryData;
 };
 
 const MovieCard = (props: Props) => {
@@ -17,7 +17,7 @@ const MovieCard = (props: Props) => {
     return (
         <div className={styles.container}>
             <div className={styles.image} style={{ backgroundImage: `url(${background})` }}></div>
-            <div className={styles.title}>{props.item.id}</div>
+            <div className={styles.title}>{overText(props.item.title || props.item.name, 20)}</div>
         </div>
     );
 };

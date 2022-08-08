@@ -1,4 +1,3 @@
-import Iframe from "react-iframe";
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../features/hooks";
 import { MovieDetailState, selectMovieDetail } from "../../features/movie/movieSlice";
@@ -10,6 +9,7 @@ import styles from "./trailerVideo.module.scss";
 const TrailerVideo = () => {
     const [videoData, setVideoData] = useState<Video[]>([]);
     const movieDetail = useAppSelector<MovieDetailState>(selectMovieDetail);
+
     useEffect(() => {
         // fetch api
         const getVideo = async () => {
@@ -29,7 +29,7 @@ const TrailerVideo = () => {
                 videoData.map((item) => (
                     <div key={item.id} className={styles.video}>
                         <h1 className={styles.title}>{item.name}</h1>
-                        <Iframe url={`http://www.youtube.com/embed/${item?.key}`} />
+                        <iframe src={`https://www.youtube.com/embed/${item?.key}`} />
                     </div>
                 ))}
         </div>

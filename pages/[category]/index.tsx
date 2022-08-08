@@ -1,18 +1,17 @@
 import { Button } from "@mui/material";
-import { style } from "@mui/system";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import MovieCard from "../../components/movieCard";
 import { useAppSelector } from "../../features/hooks";
 import { selectCategory } from "../../features/movie/movieSlice";
-import { Category, ListResponse, Movies, MovieType, TvShows, TvShowType } from "../../models";
+import { Category, CategoryData, Movies, MovieType, TvShows, TvShowType } from "../../models";
 import moviesApi from "../api/moviesApi";
 
 import styles from "./category.module.scss";
 
 const CategoryList = () => {
     let category = useAppSelector(selectCategory);
-    const [listCategory, setListCategory] = useState<TvShows[] & Movies[]>([]);
+    const [listCategory, setListCategory] = useState<CategoryData[]>([]);
     const [page, setPage] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
     const router = useRouter();
@@ -38,7 +37,7 @@ const CategoryList = () => {
             setTotalPage(response?.total_pages || 0);
         };
         getList();
-    }, [category]);
+    }, [category, type]);
 
     // Load more page from api
     const loadMore = async () => {
