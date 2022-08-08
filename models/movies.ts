@@ -71,6 +71,72 @@ export interface MovieDetail {
     vote_count: number;
 }
 
+export interface TvShowDetail {
+    adult: boolean;
+    in_production: boolean;
+    backdrop_path: string;
+    first_air_date: string;
+    homepage: string;
+    last_air_date: string;
+    name: string;
+    original_language: string;
+    original_name: string;
+    overview: string;
+    poster_path: string;
+    status: string;
+    tagline: string;
+    type: string;
+    created_by: [];
+    episode_run_time: [];
+    languages: [];
+    origin_country: [];
+    genres: [
+        {
+            id: number;
+            name: string;
+        },
+    ];
+    networks: [
+        {
+            id: number;
+            name: string;
+            logo_path: string;
+            origin_country: string;
+        },
+    ];
+    production_companies: [
+        {
+            id: number;
+            logo_path: string;
+            name: string;
+            origin_country: string;
+        },
+    ];
+    spoken_languages: [
+        {
+            english_name: string;
+            iso_639_1: string;
+            name: string;
+        },
+    ];
+    last_episode_to_air: {
+        air_date: string;
+        name: string;
+        overview: string;
+        production_code: string;
+        still_path: string;
+        episode_number: number;
+        id: number;
+        runtime: number;
+        season_number: number;
+        show_id: number;
+        vote_average: number;
+        vote_count: number;
+    };
+}
+
+export interface CategoryDetail extends MovieDetail, TvShowDetail {}
+
 export enum MovieType {
     upcoming = "upcoming",
     popular = "popular",

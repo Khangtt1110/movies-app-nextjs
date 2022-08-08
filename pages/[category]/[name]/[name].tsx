@@ -2,12 +2,12 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../../features/hooks";
 import { MovieDetailState, selectMovieDetail } from "../../../features/movie/movieSlice";
-import { MovieDetail } from "../../../models/movies";
+import { CategoryDetail, MovieDetail } from "../../../models/movies";
 import { HOME_PATH } from "../../../models/path";
 import apiConfig from "../../api/apiConfig";
 import moviesApi from "../../api/moviesApi";
 
-import { convertTime } from "../../../common/overText";
+import { convertTime, stringToDate } from "../../../common/overText";
 import styles from "./movieDetail.module.scss";
 import CastList from "../../../components/castList/catsList";
 import React from "react";
@@ -15,7 +15,7 @@ import TrailerVideo from "../../../components/trailerVideo/trailerVideo";
 
 const MoviesDetail = () => {
     const router = useRouter();
-    const [movieData, setMovieData] = useState<MovieDetail>();
+    const [movieData, setMovieData] = useState<CategoryDetail>();
     // get category and id to call api
     const movieDetail = useAppSelector<MovieDetailState>(selectMovieDetail);
     // get image path
@@ -36,18 +36,28 @@ const MoviesDetail = () => {
         };
         movieDetail && getMovieDetail();
     }, [movieDetail, router]);
-    // console.log(movieData);
+    console.log(movieData?.id);
 
     return (
         <div className={styles.container}>
             <div className={styles.poster} style={{ backgroundImage: `url(${background})` }}></div>
             <div className={styles.swapper}>
-                <h1 className={styles.name}>{movieData?.title}</h1>
+                <h1 className={styles.name}>{movieData?.title || movieData?.name}</h1>
                 <div className={styles.description}>
-                    <div className={styles.date}>{convertTime(movieData?.runtime as number)}</div>
+                    {movieData?.runtime ? (
+                        <div className={styles.date}>
+                            {convertTime(movieData?.runtime as number)}
+                        </div>
+                    ) : (
+                        <div className={styles.date}>
+                            {stringToDate(movieData?.first_air_date as string)?.slice(3) +
+                                " - " +
+                                stringToDate(movieData?.last_air_date as string)?.slice(3)}
+                        </div>
+                    )}
                     <div className={styles.types}>
                         {movieData?.genres &&
-                            movieData?.genres.slice(0.3).map((item) => (
+                            movieData?.genres.slice(0, 3).map((item) => (
                                 <div key={item.id} className={styles.element}>
                                     {item.name}
                                 </div>
