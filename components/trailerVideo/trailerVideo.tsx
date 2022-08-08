@@ -25,13 +25,17 @@ const TrailerVideo = () => {
 
     return (
         <div className={styles.container}>
-            {videoData &&
-                videoData.map((item) => (
-                    <div key={item.id} className={styles.video}>
-                        <h1 className={styles.title}>{item.name}</h1>
-                        <iframe src={`https://www.youtube.com/embed/${item?.key}`} />
-                    </div>
-                ))}
+            {videoData.length > 0 && (
+                <>
+                    <h2>Trailer</h2>
+                    {videoData.map((item) => (
+                        <div key={item.id} className={styles.video}>
+                            <h1 className={styles.title}>{item.name}</h1>
+                            <iframe src={`https://www.youtube.com/embed/${item?.key}`} />
+                        </div>
+                    ))}
+                </>
+            )}
         </div>
     );
 };
