@@ -20,16 +20,16 @@ import styles from "./category.module.scss";
 import { useSelector } from "react-redux";
 
 const CategoryList = () => {
-    let category = useAppSelector(selectCategory);
-    const isLoading = useSelector<boolean>(selectLoading);
+    const category = useAppSelector(selectCategory);
     const dispatch = useAppDispatch();
+    const isLoading = useSelector<boolean>(selectLoading);
+    const router = useRouter();
+    const location = router.asPath.slice(1);
     const [listCategory, setListCategory] = useState<CategoryData[]>([]);
     const [page, setPage] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
     const [searchValue, setSearchValue] = useState<string>("");
     const [keyword, setKeyword] = useState<string>("");
-    const router = useRouter();
-    const location = router.asPath.slice(1);
     const [isSearch, setIsSearch] = useState(false);
     const [totalResult, setTotalResult] = useState<number>(0);
     // get type by category
