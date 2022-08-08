@@ -36,15 +36,10 @@ const CategoryList = () => {
     const type =
         router.asPath.slice(1) === Category.movie ? MovieType.popular : TvShowType.top_rated;
 
-    if (category === "" || category === undefined) {
-        category = router.pathname.slice(1);
-    }
-
     // Reset;
     useEffect(() => {
-        setTimeout(() => {
-            setKeyword("");
-        }, 500);
+        setKeyword("");
+        setPage(1);
     }, [location]);
 
     let params = {};
@@ -68,10 +63,10 @@ const CategoryList = () => {
             if (keyword === "") {
                 switch (location) {
                     case Category.movie:
-                        response = await moviesApi.getMovieList(type);
+                        response = await moviesApi.getCategory(location, type, { params });
                         break;
                     case Category.tv:
-                        response = await moviesApi.getTvShowList(type);
+                        response = await moviesApi.getCategory(location, type, { params });
                         break;
                 }
             }
@@ -96,7 +91,7 @@ const CategoryList = () => {
         const params = {
             page: page + 1,
         };
-        response = await moviesApi.getTvShowList2(category, type, { params });
+        response = await moviesApi.getCategory(location, type, { params });
         // add new data
         setListCategory([...listCategory, ...(response.results as [])]);
         // set new page

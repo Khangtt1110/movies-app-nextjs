@@ -20,7 +20,7 @@ const moviesApi = {
         const url = "tv/" + type;
         return axiosClient.get(url, { params: {} });
     },
-    getTvShowList2(cate: string, type: string, param: object): Promise<ListResponse<TvShows>> {
+    getCategory(cate: string, type: string, param: object): Promise<ListResponse<TvShows>> {
         const url = cate + "/" + type;
         return axiosClient.get(url, param);
     },
