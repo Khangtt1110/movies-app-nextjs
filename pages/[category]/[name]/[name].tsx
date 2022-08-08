@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { useAppSelector } from "../../features/hooks";
-import { MovieDetailState, selectMovieDetail } from "../../features/movie/movieSlice";
-import { MovieDetail } from "../../models/movies";
-import { HOME_PATH } from "../../models/path";
-import apiConfig from "../api/apiConfig";
-import moviesApi from "../api/moviesApi";
+import { useAppSelector } from "../../../features/hooks";
+import { MovieDetailState, selectMovieDetail } from "../../../features/movie/movieSlice";
+import { MovieDetail } from "../../../models/movies";
+import { HOME_PATH } from "../../../models/path";
+import apiConfig from "../../api/apiConfig";
+import moviesApi from "../../api/moviesApi";
 
-import { convertTime } from "../../common/overText";
+import { convertTime } from "../../../common/overText";
 import styles from "./movieDetail.module.scss";
-import CastList from "../../components/castList/catsList";
+import CastList from "../../../components/castList/catsList";
 import React from "react";
-import TrailerVideo from "../../components/trailerVideo/trailerVideo";
+import TrailerVideo from "../../../components/trailerVideo/trailerVideo";
 
 const MoviesDetail = () => {
     const router = useRouter();
