@@ -31,6 +31,7 @@ const CategoryList = () => {
     const router = useRouter();
     const location = router.asPath.slice(1);
     const [isSearch, setIsSearch] = useState(false);
+    const [totalResult, setTotalResult] = useState<number>(0);
     // get type by category
     const type =
         router.asPath.slice(1) === Category.movie ? MovieType.popular : TvShowType.top_rated;
@@ -57,9 +58,12 @@ const CategoryList = () => {
             response = await moviesApi.search(location, { params });
         }
         setListCategory(response?.results as []);
+        setTotalResult(response?.total_results as number);
         setTotalPage(response?.total_pages || 0);
     };
+
     useEffect(() => {
+        dispatch(setLoading(false));
         const getData = async () => {
             if (keyword === "") {
                 switch (location) {
@@ -76,8 +80,8 @@ const CategoryList = () => {
         };
         // if search will call api
         isSearch && searchApi();
-        dispatch(setLoading(true));
         getData();
+        dispatch(setLoading(true));
         console.log(isSearch);
         return () => {
             // clear search
@@ -131,11 +135,9 @@ const CategoryList = () => {
                         />
                     </form>
                     <div className={styles.wrapper}>
-                        {listCategory?.length > 0 ? (
-                            listCategory?.map((item) => <MovieCard key={item.id} item={item} />)
-                        ) : (
-                            <div>No recent items match your search</div>
-                        )}
+                        {listCategory?.map((item) => (
+                            <MovieCard key={item.id} item={item} />
+                        ))}
                     </div>
                     {page < totalPage ? (
                         <div>
@@ -143,7 +145,13 @@ const CategoryList = () => {
                                 Load more
                             </Button>
                         </div>
-                    ) : null}
+                    ) : (
+                        <div className={styles["total-result"]}>
+                            {totalResult > 0
+                                ? `${totalResult} Result`
+                                : " No recent items match your search"}
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="loading">
