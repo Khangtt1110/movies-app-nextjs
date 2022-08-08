@@ -4,7 +4,15 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import MovieCard from "../../components/movieCard";
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
 import { selectCategory, selectLoading, setLoading } from "../../features/movie/movieSlice";
-import { Category, CategoryData, Movies, MovieType, TvShows, TvShowType } from "../../models";
+import {
+    Category,
+    CategoryData,
+    ListResponse,
+    Movies,
+    MovieType,
+    TvShows,
+    TvShowType,
+} from "../../models";
 import moviesApi from "../api/moviesApi";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -22,6 +30,7 @@ const CategoryList = () => {
     const [keyword, setKeyword] = useState<string>("");
     const router = useRouter();
     const location = router.asPath.slice(1);
+    const [isSearch, setIsSearch] = useState(false);
     // get type by category
     const type =
         router.asPath.slice(1) === Category.movie ? MovieType.popular : TvShowType.top_rated;
@@ -37,10 +46,21 @@ const CategoryList = () => {
         }, 500);
     }, [location]);
 
+    let params = {};
+    let response: ListResponse<Movies> | ListResponse<TvShows> | null = null;
+    // fetch Search APi
+    const searchApi = async () => {
+        if (keyword !== "") {
+            params = {
+                query: keyword,
+            };
+            response = await moviesApi.search(location, { params });
+        }
+        setListCategory(response?.results as []);
+        setTotalPage(response?.total_pages || 0);
+    };
     useEffect(() => {
         const getData = async () => {
-            let params = {};
-            let response = null;
             if (keyword === "") {
                 switch (location) {
                     case Category.movie:
@@ -50,17 +70,19 @@ const CategoryList = () => {
                         response = await moviesApi.getTvShowList(type);
                         break;
                 }
-            } else {
-                params = {
-                    query: keyword,
-                };
-                response = await moviesApi.search(location, { params });
             }
             setListCategory(response?.results as []);
             setTotalPage(response?.total_pages || 0);
         };
+        // if search will call api
+        isSearch && searchApi();
         dispatch(setLoading(true));
         getData();
+        console.log(isSearch);
+        return () => {
+            // clear search
+            setIsSearch(false);
+        };
     }, [dispatch, keyword, location, type]);
 
     // Load more page from api
@@ -86,6 +108,7 @@ const CategoryList = () => {
     const handleSearch = (event: React.FormEvent<HTMLElement>) => {
         event.preventDefault();
         setKeyword(searchValue);
+        setIsSearch(true);
         setSearchValue("");
     };
     return (
