@@ -20,7 +20,11 @@ import { PROFILE_PATH } from "../../models";
 import styles from "./header.module.scss";
 import { Redirect } from "next";
 import { useAppSelector } from "../../features/hooks";
-import { MovieDetailState, selectMovieDetail } from "../../features/movie/movieSlice";
+import {
+    MovieDetailState,
+    selectCategory,
+    selectMovieDetail,
+} from "../../features/movie/movieSlice";
 
 export default function Header() {
     const router = useRouter();
@@ -30,6 +34,7 @@ export default function Header() {
     const [menuPopup, setMenuPopup] = useState(false);
     const navItems = ["Home", "About", "Contact"];
     const [searchValue, setSearchValue] = useState("");
+    const category = useAppSelector(selectCategory);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -82,11 +87,12 @@ export default function Header() {
 
     const handleSearch = useCallback(
         (event: React.FormEvent<HTMLElement>) => {
-            // if (searchValue.length > 0) {
-            //     router.push(`movie/search/` + 12);
-            // }
+            if (searchValue.length > 0) {
+                console.log(searchValue);
+                router.push(`${category}/search/` + searchValue);
+            }
         },
-        [movieDetail.category, router, searchValue],
+        [category, router, searchValue],
     );
 
     const menuId = "primary-search-account-menu";

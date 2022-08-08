@@ -1,7 +1,6 @@
 .container {
-
-
-    .title {}
+    .title {
+    }
 
     .wrapper {
         display: flex;
@@ -9,4 +8,57 @@
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
+
+    .search-wrapper {
+        position: relative;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.15);
+        margin-right: 16px;
+        margin-left: 0;
+        margin-bottom: 1rem;
+
+        // @include mobile {
+        //     margin-left: 24px;
+        //     width: auto;
+        // }
+
+        .search-input {
+            padding: 0 16px;
+            height: 100%;
+            position: absolute;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-placeholder {
+            color: inherit;
+            padding: 4px 4px 4px 0;
+            padding-left: calc(1em + 32px);
+        }
+    }
+}
+
+.lds-spinner {
+    color: official;
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-spinner div {
+    transform-origin: 40px 40px;
+    animation: lds-spinner 1.2s linear infinite;
+}
+.lds-spinner div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 37px;
+    width: 6px;
+    height: 18px;
+    border-radius: 20%;
+    background: #fff;
 }

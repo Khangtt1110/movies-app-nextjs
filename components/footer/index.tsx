@@ -18,6 +18,8 @@ import { useAppDispatch } from "../../features/hooks";
 import { setCategory } from "../../features/movie/movieSlice";
 import { Category } from "../../models";
 
+import { useEffect, useState } from "react";
+
 export interface Footer {
     title: string;
     value: string;
@@ -36,14 +38,14 @@ const listFooter: Footer[] = [
     },
     {
         title: "Movies",
-        value: "movies",
+        value: "movie",
         icon: HdIcon,
         category: Category.movie,
         path: MOVIES_PATH,
     },
     {
         title: "Tv Shows",
-        value: "tvShows",
+        value: "tv",
         icon: LiveTvIcon,
         category: Category.tv,
         path: TV_SHOW_PATH,
@@ -58,16 +60,28 @@ const listFooter: Footer[] = [
 
 export default function Footer() {
     const router = useRouter();
-    const [value, setValue] = React.useState("home");
+    const [value, setValue] = useState("home");
+
     const dispatch = useAppDispatch();
     /**
      * handle get click change status and redirect
      */
+
+    useEffect(() => {
+        setValue(router.asPath.slice(1));
+    }, [router.asPath]);
     const handleClick = (item: Footer) => () => {
         setValue(item.value);
         dispatch(setCategory(item.category));
         router.push(item.path);
     };
+    useEffect(() => {
+        // if (value === "home") {
+        //     router.push(HOME_PATH);
+        // }
+        // bug reload overload when pass  router into dependence
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
 
     return (
         <BottomNavigation value={value} className={styles.container}>
