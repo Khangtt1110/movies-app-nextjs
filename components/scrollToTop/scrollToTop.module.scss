@@ -1,0 +1,15 @@
+@use "../../styles/" as *;
+
+.container {
+    position: fixed;
+    display: flex;
+    z-index: 10;
+    right: 5vw;
+    bottom: 10vh;
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    background-color: $main-color;
+    justify-content: center;
+    align-items: center;
+}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import CallBackButton from "../components/callBackButton/callBackButton";
 import Footer from "../components/footer/index";
+import ScrollToTop from "../components/scrollToTop";
 import { store } from "../features/store";
 import "../styles/globals.scss";
 
@@ -22,9 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider store={store}>
             <div className="container">
+                <ScrollToTop />
                 {/* {headerLog ? <Header /> : <CallBackButton />} */}
                 {headerLog ? null : <CallBackButton />}
-
                 <Component {...pageProps} />
                 <Footer />
             </div>
