@@ -12,10 +12,6 @@ import axiosClient from "./apiClient";
 import { CategoryData, CategoryDetail, MovieDetail, TvShows } from "../../models/movies";
 
 const moviesApi = {
-    getMovieList(type: string): Promise<ListResponse<Movies>> {
-        const url = "movie/" + type;
-        return axiosClient.get(url, { params: {} });
-    },
     getCategory(cate: string, type: string, param: object): Promise<ListResponse<CategoryData>> {
         const url = cate + "/" + type;
         return axiosClient.get(url, param);

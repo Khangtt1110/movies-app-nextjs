@@ -1,0 +1,31 @@
+@use "../../styles/" as *;
+
+$spacing-list: 20px;
+$page-width: 90vw;
+
+.container {
+    width: $page-width;
+    margin: auto;
+    justify-content: center;
+    margin-bottom: $spacing-list;
+
+    .title {
+        font-size: 20px;
+    }
+
+    .slice {
+        .image {
+            border-radius: $border-radius;
+        }
+
+        .name {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .date {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+}

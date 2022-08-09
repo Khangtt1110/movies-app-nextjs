@@ -1,3 +1,5 @@
+@use "../../styles/" as *;
+
 .container {
     height: 40vh;
     width: 100vw;
@@ -30,7 +32,7 @@
         margin-top: 10px;
 
         .image {
-            border-radius: 10px;
+            border-radius: $border-radius;
         }
 
         .overview {

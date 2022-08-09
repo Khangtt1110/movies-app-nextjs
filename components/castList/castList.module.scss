@@ -1,8 +1,10 @@
+@use "../../styles/" as *;
+
 .container {
     .wrapper {
         .slice {
             img {
-                border-radius: 10px;
+                border-radius: $border-radius;
             }
         }
 

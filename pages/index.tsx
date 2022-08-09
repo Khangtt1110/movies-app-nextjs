@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import MovieList from "../components/movieList/movieList";
+import CategoryList from "../components/categoryList/categoryList";
 
 import { useEffect, useState } from "react";
 import Slice from "../components/slice";
-import { Category, CategoryData, MovieType, Type } from "../models/movies";
+import { Category, CategoryData, MovieType, TvShowType, Type } from "../models/movies";
 import moviesApi from "./api/moviesApi";
 import styles from "./home.module.scss";
 const Home: NextPage = () => {
@@ -12,6 +12,7 @@ const Home: NextPage = () => {
     const [category, setCategory] = useState<string>(Category.movie);
     const [type, setType] = useState<Type>(MovieType.upcoming);
 
+    // Get 10 feature movies to set slice
     useEffect(() => {
         const params = { page: 1 };
         async function getList() {
@@ -33,9 +34,36 @@ const Home: NextPage = () => {
             <main>
                 <div className={styles.container}>
                     {sliceData && <Slice data={sliceData} cate={category} />}
-                    <MovieList title="What's Popular" type={MovieType.popular} />
-                    <MovieList title="Top Rate Movies" type={MovieType.top_rated} />
-                    <MovieList title="Upcoming Movies" type={MovieType.upcoming} />
+                    <CategoryList
+                        title="Trending Now"
+                        cate={Category.movie}
+                        type={MovieType.popular}
+                    />
+                    <CategoryList
+                        title="Tv Show Trending"
+                        cate={Category.tv}
+                        type={TvShowType.popular}
+                    />
+                    <CategoryList
+                        title="Top Rated Movies"
+                        cate={Category.movie}
+                        type={MovieType.top_rated}
+                    />
+                    <CategoryList
+                        title="Top Rated Tv Shows"
+                        cate={Category.tv}
+                        type={TvShowType.top_rated}
+                    />
+                    <CategoryList
+                        title="Featured Movies"
+                        cate={Category.movie}
+                        type={MovieType.upcoming}
+                    />
+                    <CategoryList
+                        title="On The Air"
+                        cate={Category.tv}
+                        type={TvShowType.on_the_air}
+                    />
                 </div>
             </main>
         </div>
