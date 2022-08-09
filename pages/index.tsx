@@ -3,12 +3,12 @@ import Head from "next/head";
 import MovieList from "../components/movieList/movieList";
 
 import { useEffect, useState } from "react";
+import Slice from "../components/slice";
 import { Category, CategoryData, MovieType, Type } from "../models/movies";
 import moviesApi from "./api/moviesApi";
 import styles from "./home.module.scss";
-import Carousel from "../components/slice";
 const Home: NextPage = () => {
-    const [moviesData, setMoviesData] = useState<CategoryData[]>();
+    const [sliceData, setSliceData] = useState<CategoryData[]>();
     const [category, setCategory] = useState<string>(Category.movie);
     const [type, setType] = useState<Type>(MovieType.upcoming);
 
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
             const response = await moviesApi.getCategory(category, type, {
                 params,
             });
-            setMoviesData(response.results.slice(0, 10));
+            setSliceData(response.results.slice(0, 10));
         }
         getList();
     }, [category, type]);
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
             </Head>
             <main>
                 <div className={styles.container}>
-                    <Carousel data={moviesData || []} cate={category || ""} />
+                    {sliceData && <Slice data={sliceData} cate={category} />}
                     <MovieList title="What's Popular" type={MovieType.popular} />
                     <MovieList title="Top Rate Movies" type={MovieType.top_rated} />
                     <MovieList title="Upcoming Movies" type={MovieType.upcoming} />

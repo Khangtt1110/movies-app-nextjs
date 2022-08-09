@@ -9,13 +9,14 @@ import apiConfig from "../../pages/api/apiConfig";
 
 import { Category, CategoryData, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import styles from "./slice.module.scss";
+import { Autoplay, Pagination } from "swiper";
 
 type Props = {
     data: CategoryData[];
     cate: string;
 };
 
-const Carousel = (props: Props) => {
+const Slice = (props: Props) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const path = props.cate === Category.movie ? MOVIES_PATH : TV_SHOW_PATH;
@@ -49,6 +50,8 @@ const Carousel = (props: Props) => {
         <Swiper
             slidesPerView={1}
             spaceBetween={0}
+            autoplay={{ delay: 5000 }}
+            modules={[Pagination, Autoplay]}
             loop={true}
             pagination={{
                 clickable: true,
@@ -103,4 +106,4 @@ const Carousel = (props: Props) => {
     );
 };
 
-export default Carousel;
+export default Slice;
