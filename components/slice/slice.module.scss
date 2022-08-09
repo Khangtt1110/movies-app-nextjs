@@ -1,0 +1,49 @@
+.container {
+    height: 40vh;
+    width: 100vw;
+}
+
+.background {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.wrapper {
+    margin: auto 20px;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+
+    .name {
+        font-size: 20px;
+        font-weight: bolder;
+        text-align: center;
+    }
+
+    .description {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        .image {
+            border-radius: 10px;
+        }
+
+        .overview {
+            width: 60%;
+            font-size: 12px;
+
+            .rating {
+                display: flex;
+                justify-content: space-between;
+                span {
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}

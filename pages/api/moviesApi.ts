@@ -9,18 +9,14 @@ import {
     Video,
 } from "../../models";
 import axiosClient from "./apiClient";
-import { CategoryDetail, MovieDetail, TvShows } from "../../models/movies";
+import { CategoryData, CategoryDetail, MovieDetail, TvShows } from "../../models/movies";
 
 const moviesApi = {
     getMovieList(type: string): Promise<ListResponse<Movies>> {
         const url = "movie/" + type;
         return axiosClient.get(url, { params: {} });
     },
-    getTvShowList(type: string): Promise<ListResponse<TvShows>> {
-        const url = "tv/" + type;
-        return axiosClient.get(url, { params: {} });
-    },
-    getCategory(cate: string, type: string, param: object): Promise<ListResponse<TvShows>> {
+    getCategory(cate: string, type: string, param: object): Promise<ListResponse<CategoryData>> {
         const url = cate + "/" + type;
         return axiosClient.get(url, param);
     },
@@ -36,7 +32,7 @@ const moviesApi = {
         const url = cate + "/" + id + "/videos";
         return axiosClient.get(url, { params: {} });
     },
-    search: (cate: string, params: any): Promise<ListResponse<Movies>> => {
+    search: (cate: string, params: any): Promise<ListResponse<CategoryData>> => {
         const url = "search/" + cate;
         return axiosClient.get(url, params);
     },

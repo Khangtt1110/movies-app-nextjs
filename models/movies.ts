@@ -30,6 +30,8 @@ export interface TvShows {
     vote_count: number;
 }
 
+export interface CategoryData extends Movies, TvShows {}
+
 export interface MovieDetail {
     adult: boolean;
     backdrop_path: string;
@@ -138,8 +140,8 @@ export interface TvShowDetail {
 export interface CategoryDetail extends MovieDetail, TvShowDetail {}
 
 export enum MovieType {
-    upcoming = "upcoming",
     popular = "popular",
+    upcoming = "upcoming",
     top_rated = "top_rated",
 }
 
@@ -148,6 +150,8 @@ export enum TvShowType {
     on_the_air = "on_the_air",
     top_rated = "top_rated",
 }
+
+export type Type = MovieType | TvShowType;
 
 export enum Category {
     movie = "movie",
