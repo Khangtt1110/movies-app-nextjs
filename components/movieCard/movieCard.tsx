@@ -30,9 +30,19 @@ const MovieCard = (props: Props) => {
         };
         // add to redux store
         dispatch(setDetailState(movieType));
+
         // get path
         const path = category === Category.movie ? MOVIES_PATH : TV_SHOW_PATH;
-        router.push(`${path}/${item.name || item.title}`);
+        router.push(
+            {
+                pathname: `${path}/${item.name || item.title} `,
+                query: {
+                    id: item.id,
+                },
+            },
+            undefined,
+            { shallow: true },
+        );
     };
     return (
         <div

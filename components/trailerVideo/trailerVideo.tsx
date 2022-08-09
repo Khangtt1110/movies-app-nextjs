@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../features/hooks";
-import { MovieDetailState, selectMovieDetail } from "../../features/movie/movieSlice";
-import moviesApi from "../../pages/api/moviesApi";
+import { CategoryDetailState, selectCategoryDetail } from "../../features/movie/movieSlice";
 import { Video } from "../../models";
+import moviesApi from "../../pages/api/moviesApi";
 
 import styles from "./trailerVideo.module.scss";
 
 const TrailerVideo = () => {
     const [videoData, setVideoData] = useState<Video[]>([]);
-    const movieDetail = useAppSelector<MovieDetailState>(selectMovieDetail);
+    const movieDetail = useAppSelector<CategoryDetailState>(selectCategoryDetail);
 
     useEffect(() => {
         // fetch api
