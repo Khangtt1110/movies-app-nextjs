@@ -1,10 +1,8 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Button, CircularProgress, InputBase } from "@mui/material";
+import { Button, InputBase } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CategoryCard from "../../components/categoryCard";
-import { useAppDispatch, useAppSelector } from "../../features/hooks";
-import { selectCategory, selectLoading, setLoading } from "../../features/movie/movieSlice";
 import {
     Category,
     CategoryData,
@@ -16,7 +14,6 @@ import {
 } from "../../models";
 import moviesApi from "../api/moviesApi";
 
-import { useSelector } from "react-redux";
 import styles from "./category.module.scss";
 
 const CategoryList = () => {
@@ -27,13 +24,11 @@ const CategoryList = () => {
     const [keyword, setKeyword] = useState<string>("");
     const [isSearch, setIsSearch] = useState(false);
     const [totalResult, setTotalResult] = useState<number>(0);
-    const dispatch = useAppDispatch();
-    const isLoading = useSelector<boolean>(selectLoading);
     const router = useRouter();
-    const location = router.asPath.slice(1);
+    const location = String(router.query.category);
+
     // get type by category
-    const type =
-        router.asPath.slice(1) === Category.movie ? MovieType.popular : TvShowType.top_rated;
+    const type = location === Category.movie ? MovieType.popular : TvShowType.top_rated;
 
     // Reset;
     useEffect(() => {
@@ -58,8 +53,6 @@ const CategoryList = () => {
     };
 
     useEffect(() => {
-        dispatch(setLoading(false));
-
         const getData = async () => {
             if (keyword === "") {
                 switch (location) {
@@ -77,12 +70,11 @@ const CategoryList = () => {
         // if search will call api
         isSearch && searchApi();
         getData();
-        dispatch(setLoading(true));
         return () => {
             // clear search
             setIsSearch(false);
         };
-    }, [dispatch, keyword, location, type]);
+    }, [keyword, location, type]);
 
     // Load more page from api
     const loadMore = async () => {
@@ -97,7 +89,6 @@ const CategoryList = () => {
         // set new page
         setPage(page + 1);
     };
-    console.log(listCategory);
 
     // get search value
     const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -112,7 +103,7 @@ const CategoryList = () => {
     };
     return (
         <>
-            {isLoading ? (
+            {listCategory && (
                 <div className={styles.container}>
                     <div className={styles.header}>
                         <div className={styles.title}>
@@ -149,10 +140,6 @@ const CategoryList = () => {
                                 : " No recent items match your search"}
                         </div>
                     )}
-                </div>
-            ) : (
-                <div className="loading">
-                    <CircularProgress />
                 </div>
             )}
         </>

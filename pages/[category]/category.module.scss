@@ -34,6 +34,10 @@
                 color: inherit;
                 padding: 4px 4px 4px 0;
                 padding-left: calc(1em + 32px);
+
+                input {
+                    padding: 5px 0 5px;
+                }
             }
         }
     }
