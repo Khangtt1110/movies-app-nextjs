@@ -1,8 +1,8 @@
 export * from "./auth";
 export * from "./path";
 export * from "./movies";
-export * from "./casts";
-export * from './videos'
+export * from "./actor";
+export * from "./videos";
 
 export interface ListResponse<T> {
     page: number;
@@ -10,4 +10,3 @@ export interface ListResponse<T> {
     total_pages: number;
     total_results: number;
 }
-

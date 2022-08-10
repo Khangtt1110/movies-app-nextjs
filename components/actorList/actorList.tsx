@@ -1,31 +1,35 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { Autoplay, Pagination } from "swiper";
+import { useEffect, useState } from "react";
+import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Casts, ListResponseCast } from "../../models";
+import { Actors } from "../../models";
 import apiConfig from "../../pages/api/apiConfig";
 import moviesApi from "../../pages/api/moviesApi";
 
-import styles from "./actorList.module.scss";
-import "swiper/css";
 import { useRouter } from "next/router";
+import "swiper/css";
+import styles from "./actorList.module.scss";
 
 const ActorList = () => {
-    const [castList, setCastList] = useState<Casts[]>();
     const router = useRouter();
+    const [actorList, setActorList] = useState<Actors[]>();
     const category = String(router.query.category);
     const id = Number(router.query.id);
+    /**
+     * Get 10 actor by category type and category id
+     */
     useEffect(() => {
-        const getCastData = async () => {
-            const response = await moviesApi.getCastList(category, id);
-            setCastList(response.cast.slice(0, 10));
+        const getActorData = async () => {
+            const response = await moviesApi.getActorList(category, id);
+            setActorList(response.cast.slice(0, 10));
         };
-        getCastData();
-    }, [category, id, router.query.id]);
+
+        getActorData();
+    }, [category, id]);
 
     return (
         <div className={styles.container}>
-            {castList && castList?.length > 0 ? (
+            {actorList && actorList?.length > 0 ? (
                 <>
                     <div className={styles.title}>Actors</div>
                     <Swiper
@@ -37,12 +41,8 @@ const ActorList = () => {
                         modules={[Pagination]}
                         className={styles.wrapper}
                     >
-                        {castList?.map((item) => (
-                            <SwiperSlide
-                                key={item.id}
-                                className={styles.slice}
-                                // onClick={handleSlideClick(item.id, item.title)}
-                            >
+                        {actorList?.map((item) => (
+                            <SwiperSlide key={item.id} className={styles.slice}>
                                 <Image
                                     src={
                                         item.profile_path === undefined

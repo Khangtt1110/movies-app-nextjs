@@ -1,4 +1,4 @@
-export interface Casts {
+export interface Actors {
     adult: boolean;
     known_for_department: string;
     name: string;
@@ -13,8 +13,8 @@ export interface Casts {
     order: number;
 }
 
-export interface ListResponseCast<Casts> {
+export interface ListResponseActor<Actors> {
     id: string;
-    cast: [Casts];
+    cast: [Actors];
     crew: [];
 }
