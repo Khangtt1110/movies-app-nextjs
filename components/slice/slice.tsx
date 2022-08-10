@@ -83,7 +83,6 @@ const Slice = (props: Props) => {
                             >
                                 {item.name || item.title}
                             </div>
-
                             <div className={styles.description}>
                                 <Image
                                     src={apiConfig.originalImage(item.poster_path) as string}
@@ -97,16 +96,19 @@ const Slice = (props: Props) => {
                                 />
                                 <div className={styles.overview}>
                                     <div>Date: {stringToDate(item.release_date)}</div>
-                                    <div className={styles.rating}>
-                                        <div>Rate: {totalRate(item.vote_average)} / 5</div>
-                                        <Rating
-                                            precision={0.1}
-                                            readOnly
-                                            name="customized-color"
-                                            defaultValue={Number(totalRate(item.vote_average))}
-                                            max={5}
-                                        />
-                                    </div>
+                                    {item.vote_average > 0 && (
+                                        <div className={styles.rating}>
+                                            <div>Rate: {totalRate(item.vote_average)} / 5</div>
+                                            <Rating
+                                                precision={0.1}
+                                                readOnly
+                                                name="customized-color"
+                                                defaultValue={Number(totalRate(item.vote_average))}
+                                                max={5}
+                                            />
+                                        </div>
+                                    )}
+
                                     <p>{overText(item.overview, 200)}</p>
                                 </div>
                             </div>

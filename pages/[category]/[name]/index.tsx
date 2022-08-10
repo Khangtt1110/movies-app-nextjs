@@ -5,12 +5,11 @@ import { CategoryDetail } from "../../../models/movies";
 import apiConfig from "../../api/apiConfig";
 import moviesApi from "../../api/moviesApi";
 
+import { Rating } from "@mui/material";
 import { convertTime, stringToDate, totalRate } from "../../../common/overText";
 import ActorList from "../../../components/actorList/actorList";
 import TrailerVideo from "../../../components/trailerVideo/trailerVideo";
-import StarIcon from "@mui/icons-material/Star";
 import styles from "./movieDetail.module.scss";
-import { Rating } from "@mui/material";
 
 const MoviesDetail = () => {
     const router = useRouter();
@@ -34,6 +33,7 @@ const MoviesDetail = () => {
         };
         getMovieDetail();
     }, [categoryId, categoryType, router]);
+    console.log(categoryDetail);
 
     return (
         <div className={styles.container}>
@@ -76,25 +76,26 @@ const MoviesDetail = () => {
                             <>
                                 <div className={styles.title}>
                                     <div>About the movie</div>
-                                    <div className={styles.rating}>
-                                        {totalRate(categoryDetail.vote_average)}
-                                        <Rating
-                                            precision={0.1}
-                                            readOnly
-                                            name="customized-color"
-                                            defaultValue={Number(
-                                                totalRate(categoryDetail.vote_average),
-                                            )}
-                                            max={5}
-                                        />
-                                    </div>
+                                    {categoryDetail.vote_count > 0 && (
+                                        <div className={styles.rating}>
+                                            {totalRate(categoryDetail.vote_average)}
+                                            <Rating
+                                                precision={0.1}
+                                                readOnly
+                                                name="customized-color"
+                                                defaultValue={Number(
+                                                    totalRate(categoryDetail.vote_average),
+                                                )}
+                                                max={5}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                                 <div className={styles.overview}>{categoryDetail.overview}</div>
                             </>
                         ) : (
                             <></>
                         )}
-
                         <ActorList />
                         <TrailerVideo />
                     </div>
