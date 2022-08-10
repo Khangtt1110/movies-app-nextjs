@@ -3,12 +3,11 @@
 // variable
 $poster-height: 70vh;
 $text-size: 10px;
-$spacing: 10px;
 
 .container {
     display: flex;
     flex-direction: column;
-    margin-bottom: calc($footer-height - $spacing);
+    margin-bottom: calc($footer-height + $spacing);
 
     .poster {
         background-position: center;

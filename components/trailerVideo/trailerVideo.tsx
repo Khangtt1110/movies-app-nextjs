@@ -6,12 +6,11 @@ import moviesApi from "../../pages/api/moviesApi";
 import styles from "./trailerVideo.module.scss";
 
 interface Props {
-    type: string;
+    cate: string;
     id: number;
 }
 
 const TrailerVideo = (props: Props) => {
-    const router = useRouter();
     const [videoData, setVideoData] = useState<Video[]>([]);
 
     useEffect(() => {
@@ -19,7 +18,7 @@ const TrailerVideo = (props: Props) => {
             // fetch api
             const getVideo = async () => {
                 // const response = await moviesApi.getTrailerVideo(category, id);
-                const response = await moviesApi.getTrailerVideo(props.type, props.id);
+                const response = await moviesApi.getTrailerVideo(props.cate, props.id);
                 // get 4 video from api
                 setVideoData(response.results.slice(0, 4));
             };

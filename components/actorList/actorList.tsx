@@ -11,7 +11,7 @@ import "swiper/css";
 import styles from "./actorList.module.scss";
 
 interface Props {
-    type: string;
+    cate: string;
     id: number;
 }
 
@@ -19,12 +19,12 @@ const ActorList = (props: Props) => {
     const router = useRouter();
     const [actorList, setActorList] = useState<Actors[]>();
     /**
-     * Get 10 actor by category type and category id
+     * Get 10 actor by category cate and category id
      */
     useEffect(() => {
         try {
             const getActorData = async () => {
-                const response = await moviesApi.getActorList(props.type, props.id);
+                const response = await moviesApi.getActorList(props.cate, props.id);
                 setActorList(response.cast.slice(0, 10));
             };
             getActorData();

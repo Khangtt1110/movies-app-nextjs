@@ -41,13 +41,17 @@ const CategoryList = (props: Props) => {
      * Get movies data
      */
     useEffect(() => {
-        const params = {};
-        async function getList() {
-            const response = await moviesApi.getCategory(props.cate, props.type, { params });
-            setCategoryData(response.results);
+        try {
+            const params = {};
+            const getList = async () => {
+                const response = await moviesApi.getCategory(props.cate, props.type, { params });
+                setCategoryData(response.results);
+            };
+            getList();
+        } catch (error) {
+            console.log("Fetch API category slice fail: ", error);
         }
-        getList();
-    }, [props.cate, props.type]);
+    }, [props]);
 
     /**`
      * handle redirect to category detail
@@ -76,40 +80,46 @@ const CategoryList = (props: Props) => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>{props.title}</h1>
-            <Swiper
-                slidesPerView={3}
-                spaceBetween={15}
-                lazy={{ loadPrevNext: true }}
-                loop={true}
-                autoplay={{ delay: 3000 }}
-                pagination={{
-                    clickable: true,
-                }}
-                modules={[Pagination, Autoplay, Lazy]}
-            >
-                {categoryData?.map((item) => (
-                    <SwiperSlide
-                        key={item.id}
-                        className={styles.slice}
-                        onClick={() => {
-                            handleSlideClick(item);
+            {categoryData && (
+                <>
+                    <h1 className={styles.title}>{props.title}</h1>
+                    <Swiper
+                        slidesPerView={3}
+                        spaceBetween={15}
+                        lazy={{ loadPrevNext: true }}
+                        loop={true}
+                        autoplay={{ delay: 3000 }}
+                        pagination={{
+                            clickable: true,
                         }}
+                        modules={[Pagination, Autoplay, Lazy]}
                     >
-                        <Image
-                            src={imagePath(item.poster_path, item.backdrop_path)}
-                            className={styles.image}
-                            alt=""
-                            width={wiperSlice.width}
-                            height={wiperSlice.height}
-                        />
-                        <div className={styles.name}>{overText(item.title || item.name, 15)}</div>
-                        <div className={styles.date}>
-                            {stringToDate(item.release_date || item.first_air_date)}
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+                        {categoryData?.map((item) => (
+                            <SwiperSlide
+                                key={item.id}
+                                className={styles.slice}
+                                onClick={() => {
+                                    handleSlideClick(item);
+                                }}
+                            >
+                                <Image
+                                    src={imagePath(item.poster_path, item.backdrop_path)}
+                                    className={styles.image}
+                                    alt=""
+                                    width={wiperSlice.width}
+                                    height={wiperSlice.height}
+                                />
+                                <div className={styles.name}>
+                                    {overText(item.title || item.name, 15)}
+                                </div>
+                                <div className={styles.date}>
+                                    {stringToDate(item.release_date || item.first_air_date)}
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </>
+            )}
         </div>
     );
 };

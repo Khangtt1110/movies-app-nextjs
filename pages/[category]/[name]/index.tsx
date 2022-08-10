@@ -10,12 +10,13 @@ import { convertTime, stringToDate, totalRate } from "../../../common/overText";
 import ActorList from "../../../components/actorList/actorList";
 import TrailerVideo from "../../../components/trailerVideo/trailerVideo";
 import styles from "./movieDetail.module.scss";
+import SimilarCategory from "../../../components/similarCategory";
 
 const MoviesDetail = () => {
     const router = useRouter();
     const [categoryDetail, setCategoryDetail] = useState<CategoryDetail>();
-    const categoryId = Number(router.query.id);
-    const categoryType = String(router.query.category);
+    const id = Number(router.query.id);
+    const category = String(router.query.category);
     // get image path
     const background = useMemo(
         () =>
@@ -29,14 +30,14 @@ const MoviesDetail = () => {
         try {
             // get api
             const getMovieDetail = async () => {
-                const response = await moviesApi.getMovieDetail(categoryType, categoryId);
+                const response = await moviesApi.getMovieDetail(category, id);
                 setCategoryDetail(response);
             };
             getMovieDetail();
         } catch (error) {
             console.log("Fetch API detail fail: ", error);
         }
-    }, [categoryId, categoryType, router]);
+    }, [id, category, router]);
 
     return (
         <div className={styles.container}>
@@ -99,8 +100,9 @@ const MoviesDetail = () => {
                         ) : (
                             <></>
                         )}
-                        <ActorList type={categoryType} id={categoryId} />
-                        <TrailerVideo type={categoryType} id={categoryId} />
+                        <ActorList cate={category} id={id} />
+                        <TrailerVideo cate={category} id={id} />
+                        <SimilarCategory cate={category} id={id} />
                     </div>
                 </>
             )}

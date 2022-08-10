@@ -1,0 +1,18 @@
+@use "../../styles/" as *;
+
+.container {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.slice {
+    margin-top: $spacing;
+
+    img {
+        border-radius: $border-radius;
+    }
+
+    .name {
+        font-size: 10px;
+    }
+}
