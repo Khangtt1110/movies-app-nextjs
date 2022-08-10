@@ -7,9 +7,9 @@ import { useAppDispatch } from "../../features/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
 import apiConfig from "../../pages/api/apiConfig";
 
+import { Autoplay, Pagination } from "swiper";
 import { Category, CategoryData, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import styles from "./slice.module.scss";
-import { Autoplay, Pagination } from "swiper";
 
 type Props = {
     data: CategoryData[];
@@ -35,15 +35,25 @@ const Slice = (props: Props) => {
      * @param id
      * @param title
      */
-    const handleSlideClick = (id: number, title: string) => () => {
-        const categoryState = {
+    const handleSliceClick = (id: number, title: string) => {
+        const movieType = {
             category: props.cate,
             id: id,
         };
-        // set category and id to redux store
-        dispatch(setDetailState(categoryState));
-        //redirect to category detail
-        router.push(`${path}/${title}`);
+        // add to redux store
+        dispatch(setDetailState(movieType));
+
+        // get path
+        router.push(
+            {
+                pathname: `${path}/${title} `,
+                query: {
+                    id: id,
+                },
+            },
+            undefined,
+            { shallow: true },
+        );
     };
 
     return (
@@ -69,7 +79,9 @@ const Slice = (props: Props) => {
                         <div className={styles.wrapper}>
                             <div
                                 className={styles.name}
-                                onClick={handleSlideClick(item.id, item.title)}
+                                onClick={() => {
+                                    handleSliceClick(item.id, item.title);
+                                }}
                             >
                                 {item.name || item.title}
                             </div>
@@ -81,7 +93,9 @@ const Slice = (props: Props) => {
                                     alt=""
                                     width={120}
                                     height={170}
-                                    onClick={handleSlideClick(item.id, item.title)}
+                                    onClick={() => {
+                                        handleSliceClick(item.id, item.title);
+                                    }}
                                 />
                                 <div className={styles.overview}>
                                     <div>Date: {stringToDate(item.release_date)}</div>

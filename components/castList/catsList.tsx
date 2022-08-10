@@ -8,21 +8,20 @@ import moviesApi from "../../pages/api/moviesApi";
 
 import styles from "./castList.module.scss";
 import "swiper/css";
+import { useRouter } from "next/router";
 
-type Props = {
-    category: string;
-    id: number;
-};
-
-const CastList = (props: Props) => {
+const CastList = () => {
     const [castList, setCastList] = useState<Casts[]>();
+    const router = useRouter();
+    const category = String(router.query.category);
+    const id = Number(router.query.id);
     useEffect(() => {
         const getCastData = async () => {
-            const response = await moviesApi.getCastList(props.category, props.id);
+            const response = await moviesApi.getCastList(category, id);
             setCastList(response.cast.slice(0, 10));
         };
         getCastData();
-    }, [props.category, props.id]);
+    }, [category, id, router.query.id]);
 
     return (
         <div className={styles.container}>

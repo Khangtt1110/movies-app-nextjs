@@ -49,20 +49,29 @@ const CategoryList = (props: Props) => {
         getList();
     }, [props.cate, props.type]);
 
-    /**
+    /**`
      * handle redirect to category detail
-     * @param id
-     * @param title
+     * @param item
      */
-    const handleSlideClick = (id: number, title: string) => () => {
-        const categoryState = {
+    const handleSlideClick = (item: CategoryData) => {
+        const movieType = {
             category: props.cate,
-            id: id,
+            id: item.id,
         };
-        // set category and id to redux store
-        dispatch(setDetailState(categoryState));
-        //redirect to category detail
-        router.push(`${path}/${title}`);
+        // add to redux store
+        dispatch(setDetailState(movieType));
+
+        // get path
+        router.push(
+            {
+                pathname: `${path}/${item.name || item.title} `,
+                query: {
+                    id: item.id,
+                },
+            },
+            undefined,
+            { shallow: true },
+        );
     };
 
     return (
@@ -82,7 +91,9 @@ const CategoryList = (props: Props) => {
                     <SwiperSlide
                         key={item.id}
                         className={styles.slice}
-                        onClick={handleSlideClick(item.id, item.title || item.name)}
+                        onClick={() => {
+                            handleSlideClick(item);
+                        }}
                     >
                         <Image
                             src={imagePath(item.poster_path, item.backdrop_path)}
