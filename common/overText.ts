@@ -17,10 +17,11 @@ export const stringToDate = (params: string) => {
 export const convertTime = (props: number) => {
     let data = "";
     if (props <= 60) {
-        return data = String(props) + 'm'
+        return (data = String(props) + "m");
     }
     data = String(Math.floor(props / 60)) + "h " + String(props % 60) + "m";
     return data;
 };
 
-
+//format total rate on the 5 scale
+export const totalRate = (rate: number) => ((rate * 5) / 10).toFixed(2);

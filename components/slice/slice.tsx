@@ -2,7 +2,7 @@ import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { overText, stringToDate } from "../../common/overText";
+import { overText, stringToDate, totalRate } from "../../common/overText";
 import { useAppDispatch } from "../../features/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
 import apiConfig from "../../pages/api/apiConfig";
@@ -26,9 +26,6 @@ const Slice = (props: Props) => {
         `linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(${apiConfig.originalImage(
             backdrop || poster,
         )})`;
-
-    //format total rate on the 5 scale
-    const totalRate = (rate: number) => (rate * 5) / 10;
 
     /**
      * handle redirect to category detail
@@ -106,7 +103,7 @@ const Slice = (props: Props) => {
                                             precision={0.1}
                                             readOnly
                                             name="customized-color"
-                                            defaultValue={totalRate(item.vote_average)}
+                                            defaultValue={Number(totalRate(item.vote_average))}
                                             max={5}
                                         />
                                     </div>

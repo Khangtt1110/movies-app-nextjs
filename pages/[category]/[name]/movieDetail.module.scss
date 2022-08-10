@@ -53,8 +53,23 @@ $spacing: 10px;
         }
     }
     .title {
-        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
         font-size: 20px;
         font-weight: bold;
+        align-items: flex-end;
+        margin-top: 10px;
+
+        .rating {
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            svg {
+                font-size: 15px;
+            }
+        }
     }
 }
