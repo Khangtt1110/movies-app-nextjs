@@ -1,59 +1,60 @@
 @use "../../../styles/" as *;
 
+// variable
+$poster-height: 70vh;
+$text-size: 10px;
+$spacing: 10px;
+
 .container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 3rem;
-    // opacity: 0.5;
+    margin-bottom: calc($footer-height - $spacing);
 
     .poster {
-        height: 70vh;
-        width: 100vw;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        height: $poster-height;
+        width: 100vw;
     }
 
     .swapper {
-        margin-top: -30px;
-        border-radius: 30px;
+        min-height: calc(100vh - $poster-height);
         background-color: $primary-color;
-        min-height: 60vh;
-        width: 100%;
-        padding: 1rem;
+        margin-top: -30px;
+        border-radius: 30px 30px 0 0;
+        width: 100vw;
+        padding: 1rem 1rem 0;
     }
 
     .name {
-        font-size: 25px;
+        font-size: 2rem;
         font-weight: bolder;
-        margin: 0;
     }
+
     .description {
         display: flex;
         align-items: center;
-        font-size: 10px;
+        font-size: $text-size;
         margin-top: 0.5rem;
 
         .date {
-            padding-right: 10px;
-            border-right: 1.7px solid $main-color;
+            padding-right: $spacing;
+            border-right: 1px solid $main-color;
         }
 
         .types {
             display: flex;
-            margin-left: 10px;
+            margin-left: $spacing;
 
-            .element {
-                margin: 0 5px;
+            * ~ * {
+                margin-left: $spacing;
             }
         }
     }
     .title {
-        margin: 15px 0 5px;
+        margin-top: 20px;
         font-size: 20px;
         font-weight: bold;
-    }
-    .overview {
-        margin-top: -10px;
     }
 }
