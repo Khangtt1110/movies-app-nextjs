@@ -14,14 +14,18 @@ const Home: NextPage = () => {
 
     // Get 10 feature movies to set slice
     useEffect(() => {
-        const params = { page: 1 };
-        async function getList() {
-            const response = await moviesApi.getCategory(category, type, {
-                params,
-            });
-            setSliceData(response.results.slice(0, 10));
+        try {
+            const params = { page: 1 };
+            const getList = async () => {
+                const response = await moviesApi.getCategory(category, type, {
+                    params,
+                });
+                setSliceData(response.results.slice(0, 10));
+            };
+            getList();
+        } catch (error) {
+            console.log("Error Fetch Slice API");
         }
-        getList();
     }, [category, type]);
 
     return (
