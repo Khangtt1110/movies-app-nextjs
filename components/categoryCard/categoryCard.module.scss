@@ -13,7 +13,7 @@ $card-height: 150px;
     .image {
         position: absolute;
         z-index: 10;
-        height: calc($card-height - 20px);
+        height: calc($card-height - 10px);
         width: $poster-width;
         background-position: center;
         background-repeat: no-repeat;
@@ -22,6 +22,7 @@ $card-height: 150px;
         border-radius: $border-radius;
         background-color: white;
     }
+
     .wrapper {
         display: flex;
         flex-direction: column;
@@ -42,6 +43,16 @@ $card-height: 150px;
         .overview {
             font-size: 12px;
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        .rating {
+            display: flex;
+            align-items: flex-end;
+            margin-top: auto;
+
+            span {
+                font-size: 15px;
+            }
         }
     }
 }

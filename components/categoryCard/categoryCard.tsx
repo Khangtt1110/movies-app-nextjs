@@ -1,20 +1,21 @@
+import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { overText } from "../../common/overText";
+import { overText, totalRate } from "../../common/overText";
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
 import { selectCategory, setDetailState } from "../../features/movie/movieSlice";
 import { Category, CategoryData, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import apiConfig from "../../pages/api/apiConfig";
 
-import styles from "./movieCard.module.scss";
+import styles from "./CategoryCard.module.scss";
 
 type Props = {
     key: number;
     item: CategoryData;
 };
 
-const MovieCard = (props: Props) => {
+const CategoryCard = (props: Props) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const category = useAppSelector(selectCategory);
@@ -22,6 +23,7 @@ const MovieCard = (props: Props) => {
     const background = useMemo(() => {
         return apiConfig.w500Image(props.item.poster_path || props.item.backdrop_path);
     }, [props.item]);
+
     // Set id into redux store and redirect
     // to movie detail by id and category
     const handleCardClick = (item: CategoryData) => {
@@ -29,6 +31,7 @@ const MovieCard = (props: Props) => {
             category: category,
             id: item.id,
         };
+
         // add to redux store
         dispatch(setDetailState(movieType));
 
@@ -59,9 +62,21 @@ const MovieCard = (props: Props) => {
                     {overText(props.item.title || props.item.name, 50)}
                 </div>
                 <div className={styles.overview}>{overText(props.item.overview, 100)}</div>
+                {Number(totalRate(props.item.vote_average)) > 0 && (
+                    <div className={styles.rating}>
+                        <Rating
+                            precision={0.1}
+                            readOnly
+                            name="customized-color"
+                            defaultValue={Number(totalRate(props.item.vote_average))}
+                            max={5}
+                        />
+                        <div>{totalRate(props.item.vote_average)}</div>
+                    </div>
+                )}
             </div>
         </div>
     );
 };
 
-export default MovieCard;
+export default CategoryCard;

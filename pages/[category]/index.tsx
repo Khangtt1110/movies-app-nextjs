@@ -2,7 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Button, CircularProgress, InputBase } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import MovieCard from "../../components/movieCard";
+import CategoryCard from "../../components/categoryCard";
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
 import { selectCategory, selectLoading, setLoading } from "../../features/movie/movieSlice";
 import {
@@ -114,10 +114,10 @@ const CategoryList = () => {
         <>
             {isLoading ? (
                 <div className={styles.container}>
-                    <div>
-                        <h1 className={styles.title}>
+                    <div className={styles.header}>
+                        <div className={styles.title}>
                             {router.asPath.slice(1) === Category.movie ? "Movies" : "Tv Shows"}
-                        </h1>
+                        </div>
                         <form className={styles["search-wrapper"]} onSubmit={handleSearch}>
                             <div className={styles["search-input"]}>
                                 <SearchIcon />
@@ -133,7 +133,7 @@ const CategoryList = () => {
                     </div>
                     <div className={styles.wrapper}>
                         {listCategory?.map((item) => (
-                            <MovieCard key={item.id} item={item} />
+                            <CategoryCard key={item.id} item={item} />
                         ))}
                     </div>
                     {page < totalPage ? (
