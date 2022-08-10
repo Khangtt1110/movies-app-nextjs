@@ -1,5 +1,16 @@
+@use '../../styles/' as *;
+
 .container {
+    display: flex;
     position: absolute;
+    background-color: rgba(255, 255, 255, .2);
     top: 20px;
     left: 20px;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+
+    svg {
+        margin: auto;
+    }
 }

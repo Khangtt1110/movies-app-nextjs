@@ -1,4 +1,4 @@
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import styles from "./callBackButton.module.scss";
@@ -11,7 +11,7 @@ const CallBackButton = () => {
     }, [router]);
     return (
         <div className={styles.container} onClick={handleCallBackClick}>
-            <ArrowBackIosIcon />
+            <KeyboardArrowLeftIcon />
         </div>
     );
 };
