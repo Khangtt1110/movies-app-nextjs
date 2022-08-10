@@ -18,7 +18,8 @@ type Props = {
 const CategoryCard = (props: Props) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const category = useAppSelector(selectCategory);
+    const category = router.query.category;
+    console.log(category);
 
     const background = useMemo(() => {
         return apiConfig.w500Image(props.item.poster_path || props.item.backdrop_path);
