@@ -1,4 +1,3 @@
-import * as React from "react";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,25 +9,19 @@ import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
-import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import { useState, useMemo, useCallback } from "react";
+import * as React from "react";
+import { useCallback, useState } from "react";
 import { PROFILE_PATH } from "../../models";
 
-import styles from "./header.module.scss";
-import { Redirect } from "next";
 import { useAppSelector } from "../../features/hooks";
-import {
-    MovieDetailState,
-    selectCategory,
-    selectMovieDetail,
-} from "../../features/movie/movieSlice";
+import { selectCategory } from "../../features/movie/movieSlice";
+import styles from "./header.module.scss";
 
 export default function Header() {
     const router = useRouter();
-    const movieDetail = useAppSelector<MovieDetailState>(selectMovieDetail);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const [menuPopup, setMenuPopup] = useState(false);
@@ -88,7 +81,6 @@ export default function Header() {
     const handleSearch = useCallback(
         (event: React.FormEvent<HTMLElement>) => {
             if (searchValue.length > 0) {
-                console.log(searchValue);
                 router.push(`${category}/search/` + searchValue);
             }
         },

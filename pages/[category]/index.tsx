@@ -1,6 +1,7 @@
+import SearchIcon from "@mui/icons-material/Search";
 import { Button, CircularProgress, InputBase } from "@mui/material";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import MovieCard from "../../components/movieCard";
 import { useAppDispatch, useAppSelector } from "../../features/hooks";
 import { selectCategory, selectLoading, setLoading } from "../../features/movie/movieSlice";
@@ -14,17 +15,11 @@ import {
     TvShowType,
 } from "../../models";
 import moviesApi from "../api/moviesApi";
-import SearchIcon from "@mui/icons-material/Search";
 
-import styles from "./category.module.scss";
 import { useSelector } from "react-redux";
+import styles from "./category.module.scss";
 
 const CategoryList = () => {
-    const category = useAppSelector(selectCategory);
-    const dispatch = useAppDispatch();
-    const isLoading = useSelector<boolean>(selectLoading);
-    const router = useRouter();
-    const location = router.asPath.slice(1);
     const [listCategory, setListCategory] = useState<CategoryData[]>([]);
     const [page, setPage] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
@@ -32,6 +27,10 @@ const CategoryList = () => {
     const [keyword, setKeyword] = useState<string>("");
     const [isSearch, setIsSearch] = useState(false);
     const [totalResult, setTotalResult] = useState<number>(0);
+    const dispatch = useAppDispatch();
+    const isLoading = useSelector<boolean>(selectLoading);
+    const router = useRouter();
+    const location = router.asPath.slice(1);
     // get type by category
     const type =
         router.asPath.slice(1) === Category.movie ? MovieType.popular : TvShowType.top_rated;
@@ -39,6 +38,7 @@ const CategoryList = () => {
     // Reset;
     useEffect(() => {
         setKeyword("");
+        setSearchValue("");
         setPage(1);
     }, [location]);
 
@@ -59,6 +59,7 @@ const CategoryList = () => {
 
     useEffect(() => {
         dispatch(setLoading(false));
+
         const getData = async () => {
             if (keyword === "") {
                 switch (location) {
@@ -77,7 +78,6 @@ const CategoryList = () => {
         isSearch && searchApi();
         getData();
         dispatch(setLoading(true));
-        console.log(isSearch);
         return () => {
             // clear search
             setIsSearch(false);
@@ -97,6 +97,7 @@ const CategoryList = () => {
         // set new page
         setPage(page + 1);
     };
+    console.log(listCategory);
 
     // get search value
     const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -108,27 +109,28 @@ const CategoryList = () => {
         event.preventDefault();
         setKeyword(searchValue);
         setIsSearch(true);
-        setSearchValue("");
     };
     return (
         <>
             {isLoading ? (
                 <div className={styles.container}>
-                    <h1 className={styles.title}>
-                        {router.asPath.slice(1) === Category.movie ? "Movies" : "Tv Shows"}
-                    </h1>
-                    <form className={styles["search-wrapper"]} onSubmit={handleSearch}>
-                        <div className={styles["search-input"]}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            inputProps={{ "aria-label": "search" }}
-                            className={styles["search-placeholder"]}
-                            onChange={handleChangeValue}
-                            value={searchValue}
-                        />
-                    </form>
+                    <div>
+                        <h1 className={styles.title}>
+                            {router.asPath.slice(1) === Category.movie ? "Movies" : "Tv Shows"}
+                        </h1>
+                        <form className={styles["search-wrapper"]} onSubmit={handleSearch}>
+                            <div className={styles["search-input"]}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                inputProps={{ "aria-label": "search" }}
+                                className={styles["search-placeholder"]}
+                                onChange={handleChangeValue}
+                                value={searchValue}
+                            />
+                        </form>
+                    </div>
                     <div className={styles.wrapper}>
                         {listCategory?.map((item) => (
                             <MovieCard key={item.id} item={item} />

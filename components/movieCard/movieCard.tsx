@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { overText } from "../../common/overText";
@@ -19,7 +20,7 @@ const MovieCard = (props: Props) => {
     const category = useAppSelector(selectCategory);
 
     const background = useMemo(() => {
-        return apiConfig.originalImage(props.item.poster_path || props.item.backdrop_path);
+        return apiConfig.w500Image(props.item.poster_path || props.item.backdrop_path);
     }, [props.item]);
     // Set id into redux store and redirect
     // to movie detail by id and category
@@ -44,6 +45,7 @@ const MovieCard = (props: Props) => {
             { shallow: true },
         );
     };
+
     return (
         <div
             className={styles.container}
@@ -52,7 +54,12 @@ const MovieCard = (props: Props) => {
             }}
         >
             <div className={styles.image} style={{ backgroundImage: `url(${background})` }}></div>
-            <div className={styles.title}>{overText(props.item.title || props.item.name, 20)}</div>
+            <div className={styles.wrapper}>
+                <div className={styles.title}>
+                    {overText(props.item.title || props.item.name, 50)}
+                </div>
+                <div className={styles.overview}>{overText(props.item.overview, 100)}</div>
+            </div>
         </div>
     );
 };
