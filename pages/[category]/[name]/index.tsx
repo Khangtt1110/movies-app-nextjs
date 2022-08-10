@@ -26,14 +26,17 @@ const MoviesDetail = () => {
      * fetch category detail api by category and id
      */
     useEffect(() => {
-        // get api
-        const getMovieDetail = async () => {
-            const response = await moviesApi.getMovieDetail(categoryType, categoryId);
-            setCategoryDetail(response);
-        };
-        getMovieDetail();
+        try {
+            // get api
+            const getMovieDetail = async () => {
+                const response = await moviesApi.getMovieDetail(categoryType, categoryId);
+                setCategoryDetail(response);
+            };
+            getMovieDetail();
+        } catch (error) {
+            console.log("Fetch API detail fail: ", error);
+        }
     }, [categoryId, categoryType, router]);
-    console.log(categoryDetail);
 
     return (
         <div className={styles.container}>
@@ -96,8 +99,8 @@ const MoviesDetail = () => {
                         ) : (
                             <></>
                         )}
-                        <ActorList />
-                        <TrailerVideo />
+                        <ActorList type={categoryType} id={categoryId} />
+                        <TrailerVideo type={categoryType} id={categoryId} />
                     </div>
                 </>
             )}

@@ -10,22 +10,28 @@ import { useRouter } from "next/router";
 import "swiper/css";
 import styles from "./actorList.module.scss";
 
-const ActorList = () => {
+interface Props {
+    type: string;
+    id: number;
+}
+
+const ActorList = (props: Props) => {
     const router = useRouter();
     const [actorList, setActorList] = useState<Actors[]>();
-    const category = String(router.query.category);
-    const id = Number(router.query.id);
     /**
      * Get 10 actor by category type and category id
      */
     useEffect(() => {
-        const getActorData = async () => {
-            const response = await moviesApi.getActorList(category, id);
-            setActorList(response.cast.slice(0, 10));
-        };
-
-        getActorData();
-    }, [category, id]);
+        try {
+            const getActorData = async () => {
+                const response = await moviesApi.getActorList(props.type, props.id);
+                setActorList(response.cast.slice(0, 10));
+            };
+            getActorData();
+        } catch (error) {
+            console.log("Fetch Api Actor fail: ", error);
+        }
+    }, [props]);
 
     return (
         <div className={styles.container}>

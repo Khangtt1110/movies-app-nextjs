@@ -5,17 +5,21 @@ import moviesApi from "../../pages/api/moviesApi";
 
 import styles from "./trailerVideo.module.scss";
 
-const TrailerVideo = () => {
+interface Props {
+    type: string;
+    id: number;
+}
+
+const TrailerVideo = (props: Props) => {
     const router = useRouter();
     const [videoData, setVideoData] = useState<Video[]>([]);
-    const category = String(router.query.category);
-    const id = Number(router.query.id);
 
     useEffect(() => {
         try {
             // fetch api
             const getVideo = async () => {
-                const response = await moviesApi.getTrailerVideo(category, id);
+                // const response = await moviesApi.getTrailerVideo(category, id);
+                const response = await moviesApi.getTrailerVideo(props.type, props.id);
                 // get 4 video from api
                 setVideoData(response.results.slice(0, 4));
             };
@@ -23,7 +27,7 @@ const TrailerVideo = () => {
         } catch (error) {
             console.log("Fetch Video API fail");
         }
-    }, [category, id]);
+    }, [props]);
 
     return (
         <div className={styles.container}>
