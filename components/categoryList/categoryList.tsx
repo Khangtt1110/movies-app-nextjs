@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Autoplay, Pagination } from "swiper";
+import { Autoplay, Lazy, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Movies, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import moviesApi from "../../pages/api/moviesApi";
@@ -80,12 +80,13 @@ const CategoryList = (props: Props) => {
             <Swiper
                 slidesPerView={3}
                 spaceBetween={15}
+                lazy={{ loadPrevNext: true }}
                 loop={true}
                 autoplay={{ delay: 3000 }}
                 pagination={{
                     clickable: true,
                 }}
-                modules={[Pagination, Autoplay]}
+                modules={[Pagination, Autoplay, Lazy]}
             >
                 {categoryData?.map((item) => (
                     <SwiperSlide

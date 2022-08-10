@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Pagination } from "swiper";
+import { Lazy, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Actors } from "../../models";
 import apiConfig from "../../pages/api/apiConfig";
@@ -35,10 +35,11 @@ const ActorList = () => {
                     <Swiper
                         slidesPerView={4}
                         spaceBetween={10}
+                        lazy={true}
                         pagination={{
                             clickable: true,
                         }}
-                        modules={[Pagination]}
+                        modules={[Pagination, Lazy]}
                         className={styles.wrapper}
                     >
                         {actorList?.map((item) => (

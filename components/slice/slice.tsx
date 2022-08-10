@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../features/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
 import apiConfig from "../../pages/api/apiConfig";
 
-import { Autoplay, Pagination } from "swiper";
+import { Autoplay, Lazy, Pagination } from "swiper";
 import { Category, CategoryData, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import styles from "./slice.module.scss";
 
@@ -61,12 +61,13 @@ const Slice = (props: Props) => {
             slidesPerView={1}
             spaceBetween={0}
             autoplay={{ delay: 5000 }}
-            modules={[Pagination, Autoplay]}
+            lazy={true}
             loop={true}
             pagination={{
                 clickable: true,
             }}
             className={styles.container}
+            modules={[Pagination, Autoplay, Lazy]}
         >
             {props.data?.map((item) => (
                 <SwiperSlide key={item?.id}>
