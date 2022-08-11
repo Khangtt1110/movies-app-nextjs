@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import ActorCard from "../../components/actorCard";
 import { PopularActor } from "../../models";
 import actorApi from "../api/actorApi";
 import styles from "./actors.module.scss";
@@ -17,7 +18,6 @@ const Actors = () => {
             getPopularActor();
         } catch (error) {}
     }, [params]);
-    console.log(popularActor);
 
     // handle load more api
     const handleLoadMore = useCallback(async () => {
@@ -42,11 +42,11 @@ const Actors = () => {
 
     return useMemo(
         () => (
-            <div>
+            <div className={styles.container}>
                 {listActor && (
                     <>
                         {listActor.map((item) => (
-                            <div key={item.id}>{item.name}</div>
+                            <ActorCard key={item.id} id={item.id} />
                         ))}
                     </>
                 )}

@@ -1,0 +1,41 @@
+@use "../../styles/" as *;
+
+.container {
+    display: flex;
+    margin: 2rem 0;
+
+    img {
+        border-radius: $border-radius - 5px;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 1rem 0 1rem 1rem;
+
+        .name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .text {
+            display: flex;
+            margin-top: 10px;
+            width: fit-content;
+            font-size: 10px;
+
+            * ~ * {
+                margin-left: 10px;
+            }
+            .date {
+                padding-right: 10px;
+                border-right: 1px solid $main-color;
+            }
+        }
+        .biography {
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 10px;
+            font-size: 12px;
+        }
+    }
+}
