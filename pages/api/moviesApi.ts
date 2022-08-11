@@ -27,9 +27,9 @@ const moviesApi = {
         const url = cate + "/" + id + "/similar";
         return axiosClient.get(url, param);
     },
-    search: (cate: string, param: any): Promise<ListResponse<CategoryData>> => {
+    search: (cate: string, params: object): Promise<ListResponse<CategoryData>> => {
         const url = "search/" + cate;
-        return axiosClient.get(url, param);
+        return axiosClient.get(url, { params });
     },
 };
 

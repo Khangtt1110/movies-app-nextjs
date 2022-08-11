@@ -1,7 +1,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { Button, InputBase } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CategoryCard from "../../components/categoryCard";
 import {
     Category,
@@ -26,46 +26,40 @@ const CategoryList = () => {
     const [totalResult, setTotalResult] = useState<number>(0);
     const router = useRouter();
     const location = String(router.query.category);
-
+    const params = useRef({ query: "" });
+    const response = useRef<ListResponse<Movies> | ListResponse<TvShows> | null>(null);
     // get type by category
     const type = location === Category.movie ? MovieType.popular : TvShowType.top_rated;
 
-    // Reset;
-    useEffect(() => {
-        setKeyword("");
-        setSearchValue("");
-        setPage(1);
-    }, [location]);
+    const resetSelect = useRef();
 
-    let params = {};
-    let response: ListResponse<Movies> | ListResponse<TvShows> | null = null;
-    // fetch Search APi
-    const searchApi = async () => {
+    // // fetch Search APi
+    const searchApi = useCallback(async () => {
         if (keyword !== "") {
-            params = {
+            params.current = {
                 query: keyword,
             };
-            response = await moviesApi.search(location, { params });
+            response.current = await moviesApi.search(location, params.current);
         }
-        setListCategory(response?.results as []);
-        setTotalResult(response?.total_results as number);
-        setTotalPage(response?.total_pages || 0);
-    };
+        setListCategory(response.current?.results as []);
+        setTotalResult(response.current?.total_results as number);
+        setTotalPage(response.current?.total_pages || 0);
+    }, [keyword, location, params]);
 
     useEffect(() => {
         const getData = async () => {
             if (keyword === "") {
                 switch (location) {
                     case Category.movie:
-                        response = await moviesApi.getCategory(location, type, { params });
+                        response.current = await moviesApi.getCategory(location, type, { params });
                         break;
                     case Category.tv:
-                        response = await moviesApi.getCategory(location, type, { params });
+                        response.current = await moviesApi.getCategory(location, type, { params });
                         break;
                 }
             }
-            setListCategory(response?.results as []);
-            setTotalPage(response?.total_pages || 0);
+            setListCategory(response.current?.results as []);
+            setTotalPage(response.current?.total_pages || 0);
         };
         // if search will call api
         isSearch && searchApi();
@@ -74,10 +68,17 @@ const CategoryList = () => {
             // clear search
             setIsSearch(false);
         };
-    }, [keyword, location, type]);
+    }, [isSearch, keyword, location, searchApi, type]);
+
+    // Reset;
+    useEffect(() => {
+        setKeyword("");
+        setSearchValue("");
+        setPage(1);
+    }, [location]);
 
     // Load more page from api
-    const loadMore = async () => {
+    const loadMore = useCallback(async () => {
         let response = null;
         // next page
         const params = {
@@ -88,7 +89,7 @@ const CategoryList = () => {
         setListCategory([...listCategory, ...(response.results as [])]);
         // set new page
         setPage(page + 1);
-    };
+    }, [listCategory, location, page, type]);
 
     // get search value
     const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -96,14 +97,29 @@ const CategoryList = () => {
     };
 
     // handle to resolve logic search
-    const handleSearch = (event: React.FormEvent<HTMLElement>) => {
-        event.preventDefault();
-        setKeyword(searchValue);
-        setIsSearch(true);
-    };
-    return (
-        <>
-            {listCategory && (
+    const handleSearch = useCallback(
+        (event: React.FormEvent<HTMLElement>) => {
+            event.preventDefault();
+            setKeyword(searchValue);
+            setIsSearch(true);
+            const element = event.target as HTMLInputElement;
+            element.value;
+        },
+        [searchValue],
+    );
+    // Show all
+    const ListAllCategory = useMemo(() => {
+        return (
+            <div className={styles.wrapper}>
+                {listCategory?.map((item) => (
+                    <CategoryCard key={item.id} item={item} />
+                ))}
+            </div>
+        );
+    }, [listCategory]);
+    return useMemo(
+        () => (
+            <>
                 <div className={styles.container}>
                     <div className={styles.header}>
                         <div className={styles.title}>
@@ -119,30 +135,42 @@ const CategoryList = () => {
                                 className={styles["search-placeholder"]}
                                 onChange={handleChangeValue}
                                 value={searchValue}
+                                ref={resetSelect}
                             />
                         </form>
                     </div>
-                    <div className={styles.wrapper}>
-                        {listCategory?.map((item) => (
-                            <CategoryCard key={item.id} item={item} />
-                        ))}
-                    </div>
-                    {page < totalPage ? (
-                        <div>
-                            <Button onClick={loadMore} style={{ marginBottom: "5rem" }}>
-                                Load more
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className={styles["total-result"]}>
-                            {totalResult > 0
-                                ? `${totalResult} Result`
-                                : " No recent items match your search"}
-                        </div>
+                    {listCategory && (
+                        <>
+                            {!!ListAllCategory && ListAllCategory}
+                            {page < totalPage ? (
+                                <div>
+                                    <Button onClick={loadMore} style={{ marginBottom: "5rem" }}>
+                                        Load more
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className={styles["total-result"]}>
+                                    {totalResult > 0
+                                        ? `${totalResult} Result`
+                                        : " No recent items match your search"}
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
-            )}
-        </>
+            </>
+        ),
+        [
+            ListAllCategory,
+            handleSearch,
+            listCategory,
+            loadMore,
+            page,
+            router.asPath,
+            searchValue,
+            totalPage,
+            totalResult,
+        ],
     );
 };
 
