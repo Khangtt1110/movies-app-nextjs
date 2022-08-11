@@ -1,16 +1,16 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { CategoryDetail } from "../../../models/movies";
+import { CategoryDetail } from "../../../models";
 import apiConfig from "../../api/apiConfig";
-import moviesApi from "../../api/moviesApi";
+import moviesApi from "../../api/categoryApi";
 
 import { Rating } from "@mui/material";
 import { convertTime, stringToDate, totalRate } from "../../../common/overText";
 import ActorList from "../../../components/actorList/actorList";
+import SimilarCategory from "../../../components/similarCategory";
 import TrailerVideo from "../../../components/trailerVideo/trailerVideo";
 import styles from "./movieDetail.module.scss";
-import SimilarCategory from "../../../components/similarCategory";
 
 const MoviesDetail = () => {
     const router = useRouter();
@@ -29,11 +29,11 @@ const MoviesDetail = () => {
     useEffect(() => {
         try {
             // get api
-            const getMovieDetail = async () => {
-                const response = await moviesApi.getMovieDetail(category, id);
+            const getCategoryDetail = async () => {
+                const response = await moviesApi.getCategoryDetail(category, id);
                 setCategoryDetail(response);
             };
-            getMovieDetail();
+            getCategoryDetail();
         } catch (error) {
             console.log("Fetch API detail fail: ", error);
         }

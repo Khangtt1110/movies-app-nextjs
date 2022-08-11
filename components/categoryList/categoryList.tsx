@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { Autoplay, Lazy, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Movies, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
-import moviesApi from "../../pages/api/moviesApi";
+import { MOVIES_PATH, TV_SHOW_PATH } from "../../models";
+import getCategoryDetail from "../../pages/api/categoryApi";
 
 import { overText, stringToDate } from "../../common/overText";
 import apiConfig from "../../pages/api/apiConfig";
 
 import Image from "next/image";
-import { Category, CategoryData } from "../../models/movies";
-import "swiper/css";
 import { useRouter } from "next/router";
+import "swiper/css";
 import { useAppDispatch } from "../../features/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
+import { Category, CategoryData } from "../../models";
 
 import styles from "./categoryList.module.scss";
 
@@ -44,7 +44,9 @@ const CategoryList = (props: Props) => {
         try {
             const params = {};
             const getList = async () => {
-                const response = await moviesApi.getCategory(props.cate, props.type, { params });
+                const response = await getCategoryDetail.getCategory(props.cate, props.type, {
+                    params,
+                });
                 setCategoryData(response.results);
             };
             getList();

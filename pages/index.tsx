@@ -4,8 +4,8 @@ import CategoryList from "../components/categoryList/categoryList";
 
 import { useEffect, useState } from "react";
 import Slice from "../components/slice";
-import { Category, CategoryData, MovieType, TvShowType, Type } from "../models/movies";
-import moviesApi from "./api/moviesApi";
+import { Category, CategoryData, MovieType, TvShowType, Type } from "../models";
+import getCategoryDetail from "./api/categoryApi";
 import styles from "./home.module.scss";
 const Home: NextPage = () => {
     const [sliceData, setSliceData] = useState<CategoryData[]>();
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         try {
             const params = { page: 1 };
             const getList = async () => {
-                const response = await moviesApi.getCategory(category, type, {
+                const response = await getCategoryDetail.getCategory(category, type, {
                     params,
                 });
                 setSliceData(response.results.slice(0, 10));

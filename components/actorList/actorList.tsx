@@ -4,7 +4,7 @@ import { Lazy, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Actors } from "../../models";
 import apiConfig from "../../pages/api/apiConfig";
-import moviesApi from "../../pages/api/moviesApi";
+import getCategoryDetail from "../../pages/api/categoryApi";
 
 import { useRouter } from "next/router";
 import "swiper/css";
@@ -24,7 +24,7 @@ const ActorList = (props: Props) => {
     useEffect(() => {
         try {
             const getActorData = async () => {
-                const response = await moviesApi.getActorList(props.cate, props.id);
+                const response = await getCategoryDetail.getActorList(props.cate, props.id);
                 setActorList(response.cast.slice(0, 10));
             };
             getActorData();

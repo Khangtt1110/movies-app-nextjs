@@ -12,7 +12,7 @@ import {
     TvShows,
     TvShowType,
 } from "../../models";
-import moviesApi from "../api/moviesApi";
+import getCategoryDetail from "../api/categoryApi";
 
 import styles from "./category.module.scss";
 
@@ -31,15 +31,13 @@ const CategoryList = () => {
     // get type by category
     const type = location === Category.movie ? MovieType.popular : TvShowType.top_rated;
 
-    const resetSelect = useRef();
-
     // // fetch Search APi
     const searchApi = useCallback(async () => {
         if (keyword !== "") {
             params.current = {
                 query: keyword,
             };
-            response.current = await moviesApi.search(location, params.current);
+            response.current = await getCategoryDetail.search(location, params.current);
         }
         setListCategory(response.current?.results as []);
         setTotalResult(response.current?.total_results as number);
@@ -51,10 +49,14 @@ const CategoryList = () => {
             if (keyword === "") {
                 switch (location) {
                     case Category.movie:
-                        response.current = await moviesApi.getCategory(location, type, { params });
+                        response.current = await getCategoryDetail.getCategory(location, type, {
+                            params,
+                        });
                         break;
                     case Category.tv:
-                        response.current = await moviesApi.getCategory(location, type, { params });
+                        response.current = await getCategoryDetail.getCategory(location, type, {
+                            params,
+                        });
                         break;
                 }
             }
@@ -84,7 +86,7 @@ const CategoryList = () => {
         const params = {
             page: page + 1,
         };
-        response = await moviesApi.getCategory(location, type, { params });
+        response = await getCategoryDetail.getCategory(location, type, { params });
         // add new data
         setListCategory([...listCategory, ...(response.results as [])]);
         // set new page
@@ -102,8 +104,6 @@ const CategoryList = () => {
             event.preventDefault();
             setKeyword(searchValue);
             setIsSearch(true);
-            const element = event.target as HTMLInputElement;
-            element.value;
         },
         [searchValue],
     );
@@ -135,7 +135,6 @@ const CategoryList = () => {
                                 className={styles["search-placeholder"]}
                                 onChange={handleChangeValue}
                                 value={searchValue}
-                                ref={resetSelect}
                             />
                         </form>
                     </div>

@@ -1,7 +1,6 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Video } from "../../models";
-import moviesApi from "../../pages/api/moviesApi";
+import getCategoryDetail from "../../pages/api/categoryApi";
 
 import styles from "./trailerVideo.module.scss";
 
@@ -17,8 +16,7 @@ const TrailerVideo = (props: Props) => {
         try {
             // fetch api
             const getVideo = async () => {
-                // const response = await moviesApi.getTrailerVideo(category, id);
-                const response = await moviesApi.getTrailerVideo(props.cate, props.id);
+                const response = await getCategoryDetail.getTrailerVideo(props.cate, props.id);
                 // get 4 video from api
                 setVideoData(response.results.slice(0, 4));
             };
