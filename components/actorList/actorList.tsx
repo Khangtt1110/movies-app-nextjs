@@ -16,7 +16,6 @@ interface Props {
 }
 
 const ActorList = (props: Props) => {
-    const router = useRouter();
     const [actorList, setActorList] = useState<Actors[]>();
     /**
      * Get 10 actor by category cate and category id
