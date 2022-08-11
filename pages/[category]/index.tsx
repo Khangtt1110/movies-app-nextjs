@@ -12,7 +12,7 @@ import {
     TvShows,
     TvShowType,
 } from "../../models";
-import getCategoryDetail from "../api/categoryApi";
+import categoryApi from "../api/categoryApi";
 
 import styles from "./category.module.scss";
 
@@ -37,7 +37,7 @@ const CategoryList = () => {
             params.current = {
                 query: keyword,
             };
-            response.current = await getCategoryDetail.search(location, params.current);
+            response.current = await categoryApi.search(location, params.current);
         }
         setListCategory(response.current?.results as []);
         setTotalResult(response.current?.total_results as number);
@@ -49,12 +49,12 @@ const CategoryList = () => {
             if (keyword === "") {
                 switch (location) {
                     case Category.movie:
-                        response.current = await getCategoryDetail.getCategory(location, type, {
+                        response.current = await categoryApi.getCategory(location, type, {
                             params,
                         });
                         break;
                     case Category.tv:
-                        response.current = await getCategoryDetail.getCategory(location, type, {
+                        response.current = await categoryApi.getCategory(location, type, {
                             params,
                         });
                         break;
@@ -86,7 +86,7 @@ const CategoryList = () => {
         const params = {
             page: page + 1,
         };
-        response = await getCategoryDetail.getCategory(location, type, { params });
+        response = await categoryApi.getCategory(location, type, { params });
         // add new data
         setListCategory([...listCategory, ...(response.results as [])]);
         // set new page

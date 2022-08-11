@@ -1,4 +1,12 @@
-import { Actors, CategoryData, CategoryDetail, ListResponse, ListResponseActor, ListResponseVideo, Video } from "../../models";
+import {
+    Actors,
+    CategoryData,
+    CategoryDetail,
+    ListResponse,
+    ListResponseActor,
+    ListResponseVideo,
+    Video,
+} from "../../models";
 import axiosClient from "./apiClient";
 
 const categoryApi = {

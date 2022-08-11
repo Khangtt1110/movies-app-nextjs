@@ -1,9 +1,62 @@
-import React from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { PopularActor } from "../../models";
+import actorApi from "../api/actorApi";
+import styles from "./actors.module.scss";
 
-type Props = {};
+const Actors = () => {
+    const [popularActor, setPopularActor] = useState<PopularActor[]>([]);
+    const [page, setPage] = useState<number>(1);
+    const [params, setParams] = useState<object>({ page: page });
 
-const Actors = (props: Props) => {
-    return <div>Actors</div>;
+    useEffect(() => {
+        try {
+            const getPopularActor = async () => {
+                const response = await actorApi.getPopularActor(params);
+                setPopularActor(response.results);
+            };
+            getPopularActor();
+        } catch (error) {}
+    }, [params]);
+    console.log(popularActor);
+
+    // handle load more api
+    const handleLoadMore = useCallback(async () => {
+        const params = {
+            page: page + 1,
+        };
+        const response = await actorApi.getPopularActor(params);
+        setPopularActor([...popularActor, ...response.results]);
+        setPage(page + 1);
+    }, [page, popularActor]);
+
+    // Function to return a new array without duplicate ids
+    const uniqueIds: number[] = [];
+    const listActor = popularActor.filter((element) => {
+        const isDuplicate = uniqueIds.includes(element.id);
+        if (!isDuplicate) {
+            uniqueIds.push(element.id);
+            return true;
+        }
+        return false;
+    });
+
+    return useMemo(
+        () => (
+            <div>
+                {listActor && (
+                    <>
+                        {listActor.map((item) => (
+                            <div key={item.id}>{item.name}</div>
+                        ))}
+                    </>
+                )}
+                <h3 onClick={handleLoadMore} style={{ marginBottom: "5rem" }}>
+                    Load More
+                </h3>
+            </div>
+        ),
+        [handleLoadMore, listActor],
+    );
 };
 
 export default Actors;
