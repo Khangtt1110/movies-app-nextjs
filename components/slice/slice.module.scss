@@ -1,14 +1,19 @@
 @use "../../styles/" as *;
 
 .container {
-    height: 40vh;
+    height: 50vh;
     width: 100vw;
+
+    @include mobile {
+        height: 40vh;
+    }
 }
 
 .background {
     display: flex;
     height: 100%;
     width: 100%;
+    justify-content: center;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -28,12 +33,8 @@
 
     .description {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         margin-top: 10px;
-
-        .image {
-            border-radius: $border-radius;
-        }
 
         .overview {
             width: 60%;
@@ -48,4 +49,13 @@
             }
         }
     }
+}
+
+.image {
+    border-radius: $border-radius;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-color: white !important;
+    // height: 100vh;
 }

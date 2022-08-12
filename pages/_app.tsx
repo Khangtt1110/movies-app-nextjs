@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -21,13 +22,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [router.pathname]);
     return (
         <Provider store={store}>
-            <div className="container">
-                <ScrollToTop />
-                {/* {headerLog ? <Header /> : <CallBackButton />} */}
-                {headerLog ? null : <CallBackButton />}
-                <Component {...pageProps} />
-                <Footer />
-            </div>
+            {/* <Typography className="container"> */}
+            <ScrollToTop />
+            {/* {headerLog ? <Header /> : <CallBackButton />} */}
+            {headerLog ? null : <CallBackButton />}
+            <Component {...pageProps} />
+            <Footer />
+            {/* </Typography> */}
         </Provider>
     );
 }

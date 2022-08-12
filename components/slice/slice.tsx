@@ -1,4 +1,4 @@
-import { Rating } from "@mui/material";
+import { Rating, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -57,7 +57,7 @@ const Slice = (props: Props) => {
         <Swiper
             slidesPerView={1}
             spaceBetween={0}
-            autoplay={{ delay: 5000 }}
+            // autoplay={{ delay: 5000 }}
             lazy={true}
             loop={true}
             pagination={{
@@ -68,37 +68,43 @@ const Slice = (props: Props) => {
         >
             {props.data?.map((item) => (
                 <SwiperSlide key={item?.id}>
-                    <div
-                        className={styles.background}
+                    <Typography
+                        className={`col-12 ${styles.background}`}
                         style={{
                             backgroundImage: background(item.backdrop_path, item.poster_path),
                         }}
                     >
-                        <div className={styles.wrapper}>
-                            <div
-                                className={styles.name}
+                        <Typography className={`container m-auto`}>
+                            <Typography
+                                className={`col-12 fw-bold text-center fs-1`}
+                                // styles.name
                                 onClick={() => {
                                     handleSliceClick(item.id, item.title);
                                 }}
                             >
                                 {item.name || item.title}
-                            </div>
-                            <div className={styles.description}>
-                                <Image
-                                    src={apiConfig.originalImage(item.poster_path) as string}
-                                    className={styles.image}
-                                    alt=""
-                                    width={120}
-                                    height={170}
+                            </Typography>
+                            <Typography className={`row`}>
+                                <Typography
+                                    style={{
+                                        background: `url(${
+                                            apiConfig.originalImage(item.poster_path) as string
+                                        })`,
+                                    }}
+                                    className={`col-4 ${styles.image}`}
+                                    //styles.image
+
                                     onClick={() => {
                                         handleSliceClick(item.id, item.title);
                                     }}
                                 />
-                                <div className={styles.overview}>
-                                    <div>Date: {stringToDate(item.release_date)}</div>
+                                <Typography className={`col-8`}>
+                                    <Typography>Date: {stringToDate(item.release_date)}</Typography>
                                     {item.vote_average > 0 && (
-                                        <div className={styles.rating}>
-                                            <div>Rate: {totalRate(item.vote_average)} / 5</div>
+                                        <Typography className={styles.rating}>
+                                            <Typography>
+                                                Rate: {totalRate(item.vote_average)} / 5
+                                            </Typography>
                                             <Rating
                                                 precision={0.1}
                                                 readOnly
@@ -106,14 +112,16 @@ const Slice = (props: Props) => {
                                                 defaultValue={Number(totalRate(item.vote_average))}
                                                 max={5}
                                             />
-                                        </div>
+                                        </Typography>
                                     )}
 
-                                    <p>{overText(item.overview, 200)}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                    <Typography className="overflow-auto">
+                                        {item.overview}
+                                    </Typography>
+                                </Typography>
+                            </Typography>
+                        </Typography>
+                    </Typography>
                 </SwiperSlide>
             ))}
         </Swiper>
