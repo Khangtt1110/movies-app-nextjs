@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { overText, stringToDate } from "../../common/overText";
-import { ActorDetail, PopularActor } from "../../models";
+import { ActorDetail, ACTORS_PATH, PopularActor } from "../../models";
 import actorApi from "../../pages/api/actorApi";
 import apiConfig from "../../pages/api/apiConfig";
 
@@ -13,9 +14,29 @@ type Props = {
 
 const ActorCard = (props: Props) => {
     const [actorDetail, setActorDetail] = useState<ActorDetail>();
+    const router = useRouter();
+    // get img path
     const background = useCallback((path: string) => {
         return apiConfig.originalImage(path);
     }, []);
+
+    const handleClickCard = useCallback(
+        (id: number, name: string) => {
+            // get path
+            router.push(
+                {
+                    pathname: `${ACTORS_PATH}/${name} `,
+                    query: {
+                        id: id,
+                    },
+                },
+                undefined,
+                { shallow: true },
+            );
+        },
+        [router],
+    );
+
     useEffect(() => {
         try {
             const getActorDetail = async () => {
@@ -26,7 +47,6 @@ const ActorCard = (props: Props) => {
         } catch (error) {}
     }, [props]);
 
-    console.log(actorDetail);
     return useMemo(
         () => (
             <>
@@ -37,6 +57,9 @@ const ActorCard = (props: Props) => {
                             alt=""
                             width={100}
                             height={130}
+                            onClick={() => {
+                                handleClickCard(actorDetail.id, actorDetail.name);
+                            }}
                         />
                         <div className={styles.wrapper}>
                             <div className={styles.name}>{actorDetail.name}</div>
@@ -54,7 +77,7 @@ const ActorCard = (props: Props) => {
                 )}
             </>
         ),
-        [actorDetail, background],
+        [actorDetail, background, handleClickCard],
     );
 };
 

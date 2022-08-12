@@ -13,13 +13,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     // check router pathname
     useEffect(() => {
-        if (router.pathname === "/[category]/[name]") {
+        if (router.pathname === "/[category]/[name]" || router.pathname === "/actor/[name]") {
             setHeaderLog(false);
         } else {
             setHeaderLog(true);
         }
     }, [router.pathname]);
-
     return (
         <Provider store={store}>
             <div className="container">

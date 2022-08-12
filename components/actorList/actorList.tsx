@@ -1,14 +1,14 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Lazy, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Actors } from "../../models";
+import { Actors, ACTORS_PATH } from "../../models";
 import apiConfig from "../../pages/api/apiConfig";
 import getCategoryDetail from "../../pages/api/categoryApi";
 
-import { useRouter } from "next/router";
 import "swiper/css";
 import styles from "./actorList.module.scss";
+import { useRouter } from "next/router";
 
 interface Props {
     cate: string;
@@ -16,6 +16,7 @@ interface Props {
 }
 
 const ActorList = (props: Props) => {
+    const router = useRouter();
     const [actorList, setActorList] = useState<Actors[]>();
     /**
      * Get 10 actor by category cate and category id
@@ -32,6 +33,23 @@ const ActorList = (props: Props) => {
         }
     }, [props]);
 
+    const handleClickCard = useCallback(
+        (id: number, name: string) => {
+            // get path
+            router.push(
+                {
+                    pathname: `${ACTORS_PATH}/${name} `,
+                    query: {
+                        id: id,
+                    },
+                },
+                undefined,
+                { shallow: true },
+            );
+        },
+        [router],
+    );
+
     return (
         <div className={styles.container}>
             {actorList && actorList?.length > 0 ? (
@@ -47,8 +65,14 @@ const ActorList = (props: Props) => {
                         modules={[Pagination, Lazy]}
                         className={styles.wrapper}
                     >
-                        {actorList?.map((item) => (
-                            <SwiperSlide key={item.id} className={styles.slice}>
+                        {actorList.map((item) => (
+                            <SwiperSlide
+                                key={item.id}
+                                className={styles.slice}
+                                onClick={() => {
+                                    handleClickCard(item.id, item.name);
+                                }}
+                            >
                                 <Image
                                     src={
                                         item.profile_path === undefined
