@@ -50,7 +50,7 @@ const Home: NextPage = () => {
             <main>
                 <div className={styles.container}>
                     {sliceData && <Slice data={sliceData} cate={category} />}
-                    {/* <div className={styles.wrapper}>
+                    <div className={styles.wrapper}>
                         <CategoryList
                             title="Trending Now"
                             cate={Category.movie}
@@ -81,7 +81,7 @@ const Home: NextPage = () => {
                             cate={Category.tv}
                             type={TvShowType.on_the_air}
                         />
-                    </div> */}
+                    </div>
                 </div>
             </main>
         </div>
