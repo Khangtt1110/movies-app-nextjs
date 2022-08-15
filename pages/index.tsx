@@ -50,36 +50,38 @@ const Home: NextPage = () => {
             <main>
                 <div className={styles.container}>
                     {sliceData && <Slice data={sliceData} cate={category} />}
-                    <CategoryList
-                        title="Trending Now"
-                        cate={Category.movie}
-                        type={MovieType.popular}
-                    />
-                    <CategoryList
-                        title="Tv Show Trending"
-                        cate={Category.tv}
-                        type={TvShowType.popular}
-                    />
-                    <CategoryList
-                        title="Top Rated Movies"
-                        cate={Category.movie}
-                        type={MovieType.top_rated}
-                    />
-                    <CategoryList
-                        title="Top Rated Tv Shows"
-                        cate={Category.tv}
-                        type={TvShowType.top_rated}
-                    />
-                    <CategoryList
-                        title="Featured Movies"
-                        cate={Category.movie}
-                        type={MovieType.upcoming}
-                    />
-                    <CategoryList
-                        title="On The Air"
-                        cate={Category.tv}
-                        type={TvShowType.on_the_air}
-                    />
+                    {/* <div className={styles.wrapper}>
+                        <CategoryList
+                            title="Trending Now"
+                            cate={Category.movie}
+                            type={MovieType.popular}
+                        />
+                        <CategoryList
+                            title="Tv Show Trending"
+                            cate={Category.tv}
+                            type={TvShowType.popular}
+                        />
+                        <CategoryList
+                            title="Top Rated Movies"
+                            cate={Category.movie}
+                            type={MovieType.top_rated}
+                        />
+                        <CategoryList
+                            title="Top Rated Tv Shows"
+                            cate={Category.tv}
+                            type={TvShowType.top_rated}
+                        />
+                        <CategoryList
+                            title="Featured Movies"
+                            cate={Category.movie}
+                            type={MovieType.upcoming}
+                        />
+                        <CategoryList
+                            title="On The Air"
+                            cate={Category.tv}
+                            type={TvShowType.on_the_air}
+                        />
+                    </div> */}
                 </div>
             </main>
         </div>

@@ -14,6 +14,14 @@ export interface Movies {
     vote_average: number;
     vote_count: number;
 }
+export interface GenresItem {
+    id: number;
+    name: string;
+}
+
+export interface Genres {
+    genres: GenresItem[];
+}
 export interface TvShows {
     backdrop_path: string;
     first_air_date: string;

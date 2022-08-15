@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             {/* {headerLog ? <Header /> : <CallBackButton />} */}
             {headerLog ? null : <CallBackButton />}
             <Component {...pageProps} />
-            <Footer />
+            {/* <Footer /> */}
             {/* </Typography> */}
         </Provider>
     );

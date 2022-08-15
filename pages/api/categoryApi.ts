@@ -1,7 +1,9 @@
+import { array } from "prop-types";
 import {
     Actors,
     CategoryData,
     CategoryDetail,
+    Genres,
     ListResponse,
     ListResponseActor,
     ListResponseVideo,
@@ -13,6 +15,10 @@ const categoryApi = {
     getCategory(cate: string, type: string, param: object): Promise<ListResponse<CategoryData>> {
         const url = cate + "/" + type;
         return axiosClient.get(url, param);
+    },
+    getGenres(): Promise<Genres> {
+        const url = "genre/movie/list";
+        return axiosClient.get(url, { params: {} });
     },
     getCategoryDetail(cate: string, id: number): Promise<CategoryDetail> {
         const url = cate + "/" + id;

@@ -25,3 +25,19 @@ export const convertTime = (props: number) => {
 
 //format total rate on the 5 scale
 export const totalRate = (rate: number) => ((rate * 5) / 10).toFixed(2);
+
+/**
+ * function get last word of array string
+ */
+
+export const getLastName = (name: string) => {
+    const string = name.split(" ");
+    const length = string.length;
+    return string[length - 1];
+};
+
+export const getAnotherName = (name: string) => {
+    const string = name.split(" ");
+    const length = string.length;
+    return string.slice(0, length - 1).join(" ");
+};

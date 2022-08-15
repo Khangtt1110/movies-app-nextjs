@@ -1,61 +1,47 @@
 @use "../../styles/" as *;
 
 .container {
-    height: 50vh;
-    width: 100vw;
-
-    @include mobile {
-        height: 40vh;
-    }
+    height: 100vh;
+    width: 100%;
 }
 
 .background {
-    display: flex;
     height: 100%;
     width: 100%;
-    justify-content: center;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.wrapper {
-    margin: auto 20px;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
-
-    .name {
-        font-size: 20px;
-        font-weight: bolder;
-        text-align: center;
-    }
-
-    .description {
-        display: flex;
-        justify-content: space-evenly;
-        margin-top: 10px;
-
-        .overview {
-            width: 60%;
-            font-size: 12px;
-
-            .rating {
-                display: flex;
-                justify-content: space-between;
-                span {
-                    font-size: 15px;
-                }
-            }
-        }
-    }
-}
-
-.image {
-    border-radius: $border-radius;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
-    background-color: white !important;
-    // height: 100vh;
+}
+.title {
+    font-weight: bold;
+    font-size: 15px;
+    border-left: 5px solid $main-color;
+    padding-left: $spacing;
+    opacity: 0.8;
+}
+
+.name {
+    p:last-child {
+        color: transparent;
+        -webkit-text-stroke: 1px #fff;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.description {
+    align-items: center;
+}
+.rating {
+    width: fit-content;
+    align-items: center;
+    color: green;
+
+    .average {
+        font-size: 12px;
+        margin-left: -33px;
+        margin-right: 20px;
+    }
 }

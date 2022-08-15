@@ -1,15 +1,23 @@
-import { Rating, Typography } from "@mui/material";
+import { CircularProgress, Rating, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { overText, stringToDate, totalRate } from "../../common/overText";
+import {
+    getAnotherName,
+    getLastName,
+    overText,
+    stringToDate,
+    totalRate,
+} from "../../common/overText";
 import { useAppDispatch } from "../../features/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
 import apiConfig from "../../pages/api/apiConfig";
 
 import { Autoplay, Lazy, Pagination } from "swiper";
-import { Category, CategoryData, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
+import { Category, CategoryData, Genres, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import styles from "./slice.module.scss";
+import { useEffect, useState } from "react";
+import categoryApi from "../../pages/api/categoryApi";
 
 type Props = {
     data: CategoryData[];
@@ -17,6 +25,7 @@ type Props = {
 };
 
 const Slice = (props: Props) => {
+    const [genres, setGenres] = useState<Genres>();
     const dispatch = useAppDispatch();
     const router = useRouter();
     const path = props.cate === Category.movie ? MOVIES_PATH : TV_SHOW_PATH;
@@ -53,78 +62,65 @@ const Slice = (props: Props) => {
         );
     };
 
+    useEffect(() => {
+        const getGenres = async () => {
+            const response = await categoryApi.getGenres();
+            setGenres(response);
+        };
+
+        getGenres();
+    }, []);
+
+    console.log(genres);
+
     return (
-        <Swiper
-            slidesPerView={1}
-            spaceBetween={0}
-            // autoplay={{ delay: 5000 }}
-            lazy={true}
-            loop={true}
-            pagination={{
-                clickable: true,
-            }}
-            className={styles.container}
-            modules={[Pagination, Autoplay, Lazy]}
-        >
-            {props.data?.map((item) => (
-                <SwiperSlide key={item?.id}>
-                    <Typography
-                        className={`col-12 ${styles.background}`}
-                        style={{
-                            backgroundImage: background(item.backdrop_path, item.poster_path),
-                        }}
-                    >
-                        <Typography className={`container m-auto`}>
-                            <Typography
-                                className={`col-12 fw-bold text-center fs-1`}
-                                // styles.name
-                                onClick={() => {
-                                    handleSliceClick(item.id, item.title);
-                                }}
-                            >
-                                {item.name || item.title}
+        <Typography className={`col-12 ${styles.container}`}>
+            {props.data.map((item) => (
+                <Typography
+                    key={item.id}
+                    style={{ background: background(item.backdrop_path, item.poster_path) }}
+                    className={`${styles.background}`}
+                >
+                    <Typography className="container">
+                        <Typography className={styles.title}>NEW RELEASES</Typography>
+
+                        <div
+                            className={`row  ${styles.name}`}
+                            onClick={() => {
+                                handleSliceClick(item.id, item.title);
+                            }}
+                        >
+                            <Typography className={`fw-bold col-12 display-1`}>
+                                {getAnotherName(item.title)}
                             </Typography>
-                            <Typography className={`row`}>
-                                <Typography
-                                    style={{
-                                        background: `url(${
-                                            apiConfig.originalImage(item.poster_path) as string
-                                        })`,
-                                    }}
-                                    className={`col-4 ${styles.image}`}
-                                    //styles.image
+                            <Typography className={`fw-bold col-12 display-1`}>
+                                {getLastName(item.title)}
+                            </Typography>
+                        </div>
 
-                                    onClick={() => {
-                                        handleSliceClick(item.id, item.title);
-                                    }}
+                        <Typography className={`row d-flex ${styles.description}`}>
+                            <Typography className={`col-md-12 col-lg-3 d-flex ${styles.rating}`}>
+                                <CircularProgress
+                                    variant="determinate"
+                                    value={item.vote_average * 10}
+                                    color={"success"}
                                 />
-                                <Typography className={`col-8`}>
-                                    <Typography>Date: {stringToDate(item.release_date)}</Typography>
-                                    {item.vote_average > 0 && (
-                                        <Typography className={styles.rating}>
-                                            <Typography>
-                                                Rate: {totalRate(item.vote_average)} / 5
-                                            </Typography>
-                                            <Rating
-                                                precision={0.1}
-                                                readOnly
-                                                name="customized-color"
-                                                defaultValue={Number(totalRate(item.vote_average))}
-                                                max={5}
-                                            />
-                                        </Typography>
-                                    )}
-
-                                    <Typography className="overflow-auto">
-                                        {item.overview}
-                                    </Typography>
+                                <Typography className={`${styles.average}`}>
+                                    {totalRate(item.vote_average)}
                                 </Typography>
+                                IMDB SCORE
+                            </Typography>
+
+                            <Typography className="col-md-12 col-lg-2">
+                                {stringToDate(item.release_date)}
                             </Typography>
                         </Typography>
+                        <Typography></Typography>
                     </Typography>
-                </SwiperSlide>
+                </Typography>
             ))}
-        </Swiper>
+            <div></div>
+        </Typography>
     );
 };
 
