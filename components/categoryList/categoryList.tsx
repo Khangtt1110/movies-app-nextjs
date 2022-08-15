@@ -1,21 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { Autoplay, Lazy, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { MOVIES_PATH, TV_SHOW_PATH } from "../../models";
+import { Genres, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import getCategoryDetail from "../../pages/api/categoryApi";
 
-import { overText, stringToDate } from "../../common/overText";
 import apiConfig from "../../pages/api/apiConfig";
 
-import Image from "next/image";
 import { useRouter } from "next/router";
 import "swiper/css";
 import { useAppDispatch } from "../../features/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
 import { Category, CategoryData } from "../../models";
 
-import styles from "./categoryList.module.scss";
 import { Typography } from "@mui/material";
+import styles from "./categoryList.module.scss";
+import categoryApi from "../../pages/api/categoryApi";
 
 type Props = {
     cate: string;
@@ -26,6 +23,7 @@ const CategoryList = (props: Props) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const [categoryData, setCategoryData] = useState<CategoryData[]>();
+    const [genres, setGenres] = useState<Genres>();
     const path = props.cate === Category.movie ? MOVIES_PATH : TV_SHOW_PATH;
     const wiperSlice = {
         width: 110,
@@ -47,8 +45,14 @@ const CategoryList = (props: Props) => {
                 const response = await getCategoryDetail.getCategory(props.cate, props.type, {
                     params,
                 });
-                setCategoryData(response.results);
+                setCategoryData(response.results.slice(0, 4));
             };
+
+            const getGenres = async () => {
+                const response = await categoryApi.getGenres(props.cate);
+                setGenres(response);
+            };
+            getGenres();
             getList();
         } catch (error) {
             console.log("Fetch API category slice fail: ", error);
@@ -80,16 +84,35 @@ const CategoryList = (props: Props) => {
         );
     };
 
+    const getGenreById = (id: number) => {
+        return genres?.genres.find((x) => x.id === id)?.name + " ";
+    };
+
+    console.log(categoryData);
+
     return (
-        <Typography className={`row ${styles.container}`}>
+        <Typography className={`row g-4 ${styles.container}`}>
             {categoryData &&
                 categoryData.map((item) => (
-                    <Typography
-                        key={item.id}
-                        style={{ backgroundImage: imagePath(item.poster_path, item.backdrop_path) }}
-                        className={`col-md-6 col-lg-3 ${styles.background}`}
-                    >
-                        <Typography>{item.name || item.title}</Typography>
+                    <Typography key={item.id} className={`col-md-6 col-lg-3 `}>
+                        <Typography
+                            style={{
+                                background: `linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.9) 100%), url(${imagePath(
+                                    item.poster_path,
+                                    item.backdrop_path,
+                                )}`,
+                            }}
+                            className={`px-4 d-flex align-items-end ${styles.background}`}
+                        >
+                            <Typography>
+                                {item.genre_ids.map((id, index) =>
+                                    index < 3 ? (
+                                        <Typography key={id}>{getGenreById(id)}</Typography>
+                                    ) : null,
+                                )}
+                            </Typography>
+                            <Typography className="fs-4 ">{item.title || item.name}</Typography>
+                        </Typography>
                     </Typography>
                 ))}
         </Typography>

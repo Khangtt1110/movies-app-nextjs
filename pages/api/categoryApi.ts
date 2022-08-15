@@ -16,8 +16,8 @@ const categoryApi = {
         const url = cate + "/" + type;
         return axiosClient.get(url, param);
     },
-    getGenres(): Promise<Genres> {
-        const url = "genre/movie/list";
+    getGenres(cate: string): Promise<Genres> {
+        const url = "genre/" + cate +"/list";
         return axiosClient.get(url, { params: {} });
     },
     getCategoryDetail(cate: string, id: number): Promise<CategoryDetail> {

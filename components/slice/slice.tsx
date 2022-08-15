@@ -34,7 +34,7 @@ const Slice = (props: Props) => {
 
     // get background path and set opacity
     const background = (backdrop: string, poster: string) =>
-        `linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(${apiConfig.originalImage(
+        `linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.9) 100%), url(${apiConfig.originalImage(
             backdrop || poster,
         )})`;
 
@@ -66,11 +66,11 @@ const Slice = (props: Props) => {
     // Get all genres
     useEffect(() => {
         const getGenres = async () => {
-            const response = await categoryApi.getGenres();
+            const response = await categoryApi.getGenres(props.cate);
             setGenres(response);
         };
         getGenres();
-    }, []);
+    }, [props.cate]);
 
     const getGenreById = (id: number) => {
         return genres?.genres.find((x) => x.id === id)?.name + " ";

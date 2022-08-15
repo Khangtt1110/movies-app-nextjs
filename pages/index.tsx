@@ -4,15 +4,17 @@ import CategoryList from "../components/categoryList/categoryList";
 
 import { useEffect, useState } from "react";
 import Slice from "../components/slice";
-import { Category, CategoryData, MovieType, TvShowType, Type } from "../models";
+import { Category, CategoryData, Genres, MovieType, TvShowType, Type } from "../models";
 import getCategoryDetail from "./api/categoryApi";
 import styles from "./home.module.scss";
 import Script from "next/script";
 import { Typography } from "@mui/material";
+import categoryApi from "./api/categoryApi";
 const Home: NextPage = () => {
     const [sliceData, setSliceData] = useState<CategoryData[]>();
     const [category, setCategory] = useState<string>(Category.movie);
     const [type, setType] = useState<Type>(MovieType.upcoming);
+    // const [genres, setGenres] = useState<Genres>();
 
     // Get 10 feature movies to set slice
     useEffect(() => {
@@ -22,8 +24,14 @@ const Home: NextPage = () => {
                 const response = await getCategoryDetail.getCategory(category, type, {
                     params,
                 });
-                setSliceData(response.results.slice(0, 10));
+                setSliceData(response.results.slice(0, 3));
             };
+
+            // const getGenres = async () => {
+            //     const response = await categoryApi.getGenres();
+            //     setGenres(response);
+            // };
+            // getGenres();
             getList();
         } catch (error) {
             console.log("Error Fetch Slice API");

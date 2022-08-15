@@ -29,6 +29,13 @@ $page-width: 90vw;
 //         }
 //     }
 // }
+.container {
+    color: $white-color;
+}
 
 .background {
+    height: 60vh;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
 }

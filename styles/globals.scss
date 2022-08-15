@@ -37,9 +37,10 @@ a {
 }
 
 .Mui-selected {
-    color: white;
-    & > svg {
-        color: white;
+    color: $white-color;
+
+    &>svg {
+        color: $white-color;
     }
 }
 

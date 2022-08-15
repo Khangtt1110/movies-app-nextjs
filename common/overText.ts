@@ -1,3 +1,5 @@
+import { Genres } from "../models";
+
 export const overText = (params: string, length: number) => {
     return params.length > length ? params.slice(0, length - 1) + "..." : params;
 };
@@ -41,3 +43,4 @@ export const getAnotherName = (name: string) => {
     const length = string.length;
     return string.slice(0, length - 1).join(" ");
 };
+
