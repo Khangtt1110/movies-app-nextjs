@@ -1,9 +1,7 @@
 @use '../styles/' as *;
 ;
 
-.container {
-    // margin-bottom: 60px;
-}
+.container {}
 
 .slice {
     position: absolute;
@@ -18,6 +16,7 @@
     background-color: $white-color;
 
     p {
+        font-family: $font-bold;
         z-index: 100;
     }
 }

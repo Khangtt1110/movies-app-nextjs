@@ -102,12 +102,14 @@ const CategoryList = (props: Props) => {
                                     item.backdrop_path,
                                 )}`,
                             }}
-                            className={`px-4 d-flex align-items-end ${styles.background}`}
+                            className={`px-4 ${styles.background}`}
                         >
-                            <Typography>
+                            <Typography className={`${styles.genres} text-uppercase d-flex`}>
                                 {item.genre_ids.map((id, index) =>
-                                    index < 3 ? (
-                                        <Typography key={id}>{getGenreById(id)}</Typography>
+                                    index < 2 ? (
+                                        <Typography key={id} className={"mx-1"}>
+                                            {getGenreById(id)}
+                                        </Typography>
                                     ) : null,
                                 )}
                             </Typography>

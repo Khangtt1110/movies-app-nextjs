@@ -25,10 +25,17 @@
     border-left: 5px solid $main-color;
     padding-left: $spacing;
     opacity: 0.8;
+    font-family: $font-bold;
+    letter-spacing: 1px;
 }
 
 .name {
     width: fit-content;
+
+    p {
+        font-family: $font-bold;
+
+    }
 
     p:last-child {
         color: transparent;
@@ -38,6 +45,11 @@
 
 .description {
     align-items: center;
+
+    p {
+
+        font-family: $font-bold;
+    }
 
     &>*~* {
         margin: 10px 0;

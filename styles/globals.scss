@@ -2,9 +2,15 @@
 @use "./variables" as *;
 
 @font-face {
-    font-family: "Mont";
+    font-family: "MontBold";
     src: local("Mont"), url("../common/fonts/Mont/Mont-HeavyDEMO.otf");
     font-weight: bold;
+}
+
+@font-face {
+    font-family: "Mont";
+    src: local("Mont"), url("../common/fonts/Mont/Mont-SemiBold.ttf");
+    font-weight: normal;
 }
 
 .MuiTypography-root {

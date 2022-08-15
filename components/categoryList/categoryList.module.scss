@@ -3,34 +3,9 @@
 $spacing-list: 20px;
 $page-width: 90vw;
 
-// .container {
-//     width: $page-width;
-//     margin: auto;
-//     justify-content: center;
-//     margin-bottom: $spacing-list;
-
-//     .title {
-//         font-size: 20px;
-//     }
-
-//     .slice {
-//         .image {
-//             border-radius: $border-radius;
-//         }
-
-//         .name {
-//             font-size: 12px;
-//             font-weight: bold;
-//         }
-
-//         .date {
-//             font-size: 10px;
-//             color: rgba(255, 255, 255, 0.5);
-//         }
-//     }
-// }
 .container {
     color: $white-color;
+
 }
 
 .background {
@@ -38,4 +13,20 @@ $page-width: 90vw;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
+
+    &:hover {
+        .genres {
+            visibility: visible;
+        }
+    }
+
+    .genres {
+        visibility: hidden;
+
+        p {
+            font-family: $font-family  !important;
+            color: $main-color;
+        }
+
+    }
 }
