@@ -1,0 +1,11 @@
+@use "../../styles/" as *;
+
+.button {
+    background-color: $main-color;
+    border: 1px solid $main-color;
+    word-spacing: 5px;
+
+    &:hover {
+        background-color: transparent;
+    }
+}

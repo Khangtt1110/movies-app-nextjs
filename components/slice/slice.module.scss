@@ -6,6 +6,8 @@
 }
 
 .background {
+    display: flex;
+    align-items: center;
     height: 100%;
     width: 100%;
     background-position: center !important;
@@ -21,19 +23,21 @@
 }
 
 .name {
+    width: fit-content;
     p:last-child {
         color: transparent;
         -webkit-text-stroke: 1px #fff;
-    }
-
-    &:hover {
-        cursor: pointer;
     }
 }
 
 .description {
     align-items: center;
+
+    & > * ~ * {
+        margin: 10px 0;
+    }
 }
+
 .rating {
     width: fit-content;
     align-items: center;
@@ -43,5 +47,14 @@
         font-size: 12px;
         margin-left: -33px;
         margin-right: 20px;
+    }
+}
+
+.genres {
+    color: $main-color;
+    width: fit-content;
+
+    * ~ * {
+        margin: 0 10px;
     }
 }
