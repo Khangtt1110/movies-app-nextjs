@@ -15,9 +15,9 @@ import { setDetailState } from "../../features/movie/movieSlice";
 import { Category, CategoryData } from "../../models";
 
 import styles from "./categoryList.module.scss";
+import { Typography } from "@mui/material";
 
 type Props = {
-    title: string;
     cate: string;
     type: string;
 };
@@ -81,48 +81,18 @@ const CategoryList = (props: Props) => {
     };
 
     return (
-        <div className={styles.container}>
-            {categoryData && (
-                <>
-                    <h1 className={styles.title}>{props.title}</h1>
-                    <Swiper
-                        slidesPerView={3}
-                        spaceBetween={15}
-                        lazy={{ loadPrevNext: true }}
-                        loop={true}
-                        autoplay={{ delay: 3000 }}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        modules={[Pagination, Autoplay, Lazy]}
+        <Typography className={`row ${styles.container}`}>
+            {categoryData &&
+                categoryData.map((item) => (
+                    <Typography
+                        key={item.id}
+                        style={{ backgroundImage: imagePath(item.poster_path, item.backdrop_path) }}
+                        className={`col-md-6 col-lg-3 ${styles.background}`}
                     >
-                        {categoryData?.map((item) => (
-                            <SwiperSlide
-                                key={item.id}
-                                className={styles.slice}
-                                onClick={() => {
-                                    handleSlideClick(item);
-                                }}
-                            >
-                                <Image
-                                    src={imagePath(item.poster_path, item.backdrop_path)}
-                                    className={styles.image}
-                                    alt=""
-                                    width={wiperSlice.width}
-                                    height={wiperSlice.height}
-                                />
-                                <div className={styles.name}>
-                                    {overText(item.title || item.name, 15)}
-                                </div>
-                                <div className={styles.date}>
-                                    {stringToDate(item.release_date || item.first_air_date)}
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </>
-            )}
-        </div>
+                        <Typography>{item.name || item.title}</Typography>
+                    </Typography>
+                ))}
+        </Typography>
     );
 };
 

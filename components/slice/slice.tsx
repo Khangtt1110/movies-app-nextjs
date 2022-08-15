@@ -12,13 +12,13 @@ import { setDetailState } from "../../features/movie/movieSlice";
 import apiConfig from "../../pages/api/apiConfig";
 
 import { useEffect, useState } from "react";
+import { Autoplay, EffectCreative, Lazy } from "swiper";
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Category, CategoryData, Genres, MOVIES_PATH, TV_SHOW_PATH } from "../../models";
 import categoryApi from "../../pages/api/categoryApi";
-import styles from "./slice.module.scss";
 import Button from "../button";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Lazy, Pagination } from "swiper";
-import "swiper/css";
+import styles from "./slice.module.scss";
 
 type Props = {
     data: CategoryData[];
@@ -79,14 +79,21 @@ const Slice = (props: Props) => {
     return (
         <Swiper
             slidesPerView={1}
+            effect={"creative"}
             spaceBetween={0}
+            creativeEffect={{
+                prev: {
+                    shadow: true,
+                    translate: ["-10%", 0, -1],
+                },
+                next: {
+                    translate: ["100%", 0, 0],
+                },
+            }}
             lazy={{ loadPrevNext: true }}
             loop={true}
             autoplay={{ delay: 5000 }}
-            pagination={{
-                clickable: true,
-            }}
-            modules={[Pagination, Autoplay, Lazy]}
+            modules={[Autoplay, Lazy, EffectCreative]}
             className={styles.container}
         >
             {props.data.map((item) => (
@@ -99,14 +106,14 @@ const Slice = (props: Props) => {
                         <Typography className="container">
                             <Typography className={styles.title}>NEW RELEASES</Typography>
 
-                            <div className={`row  ${styles.name}`}>
+                            <Typography className={`row  ${styles.name}`}>
                                 <Typography className={`fw-bold col-12 display-1`}>
                                     {getAnotherName(item.title)}
                                 </Typography>
                                 <Typography className={`fw-bold col-12 display-1`}>
                                     {getLastName(item.title)}
                                 </Typography>
-                            </div>
+                            </Typography>
 
                             <Typography className={`row d-flex ${styles.description}`}>
                                 <Typography

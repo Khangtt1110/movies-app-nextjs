@@ -8,6 +8,7 @@ import { Category, CategoryData, MovieType, TvShowType, Type } from "../models";
 import getCategoryDetail from "./api/categoryApi";
 import styles from "./home.module.scss";
 import Script from "next/script";
+import { Typography } from "@mui/material";
 const Home: NextPage = () => {
     const [sliceData, setSliceData] = useState<CategoryData[]>();
     const [category, setCategory] = useState<string>(Category.movie);
@@ -50,13 +51,15 @@ const Home: NextPage = () => {
             <main>
                 <div className={styles.container}>
                     {sliceData && <Slice data={sliceData} cate={category} />}
-                    <div className={styles.wrapper}>
-                        <CategoryList
-                            title="Trending Now"
-                            cate={Category.movie}
-                            type={MovieType.popular}
-                        />
-                        <CategoryList
+                    <div className={`${styles.wrapper}`}>
+                        <div className="container">
+                            <Typography className="pt-5 text-uppercase text-secondary">
+                                Online Steaming
+                            </Typography>
+                            <Typography className="fs-1">Watch Shows Online</Typography>
+                            <CategoryList cate={Category.tv} type={TvShowType.top_rated} />
+                        </div>
+                        {/* <CategoryList
                             title="Tv Show Trending"
                             cate={Category.tv}
                             type={TvShowType.popular}
@@ -80,7 +83,7 @@ const Home: NextPage = () => {
                             title="On The Air"
                             cate={Category.tv}
                             type={TvShowType.on_the_air}
-                        />
+                        /> */}
                     </div>
                 </div>
             </main>
