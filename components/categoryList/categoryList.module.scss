@@ -9,6 +9,10 @@ $page-width: 90vw;
 }
 
 .background {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-direction: column;
     height: 60vh;
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -24,9 +28,26 @@ $page-width: 90vw;
         visibility: hidden;
 
         p {
-            font-family: $font-family  !important;
+            font-size: 12px;
+            font-family: $font-family;
             color: $main-color;
+
         }
 
+        *~* {
+            margin-left: 20px;
+        }
+
+    }
+
+    .icon {
+        font-size: 50px;
+        width: fit-content;
+        margin-right: 20px;
+        cursor: pointer;
+
+        &:hover {
+            color: $main-color;
+        }
     }
 }

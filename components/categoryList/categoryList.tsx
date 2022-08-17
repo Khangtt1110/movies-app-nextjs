@@ -9,10 +9,12 @@ import "swiper/css";
 import { useAppDispatch } from "../../features/hooks";
 import { setDetailState } from "../../features/movie/movieSlice";
 import { Category, CategoryData } from "../../models";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 
 import { Typography } from "@mui/material";
 import styles from "./categoryList.module.scss";
 import categoryApi from "../../pages/api/categoryApi";
+import { overText, stringToDate } from "../../common/overText";
 
 type Props = {
     cate: string;
@@ -25,6 +27,7 @@ const CategoryList = (props: Props) => {
     const [categoryData, setCategoryData] = useState<CategoryData[]>();
     const [genres, setGenres] = useState<Genres>();
     const path = props.cate === Category.movie ? MOVIES_PATH : TV_SHOW_PATH;
+
     const wiperSlice = {
         width: 110,
         height: 150,
@@ -88,8 +91,6 @@ const CategoryList = (props: Props) => {
         return genres?.genres.find((x) => x.id === id)?.name + " ";
     };
 
-    console.log(categoryData);
-
     return (
         <Typography className={`row g-4 ${styles.container}`}>
             {categoryData &&
@@ -107,13 +108,24 @@ const CategoryList = (props: Props) => {
                             <Typography className={`${styles.genres} text-uppercase d-flex`}>
                                 {item.genre_ids.map((id, index) =>
                                     index < 2 ? (
-                                        <Typography key={id} className={"mx-1"}>
-                                            {getGenreById(id)}
-                                        </Typography>
+                                        <Typography key={id}>{getGenreById(id)}</Typography>
                                     ) : null,
                                 )}
                             </Typography>
-                            <Typography className="fs-4 ">{item.title || item.name}</Typography>
+
+                            <Typography className="fs-3 ">
+                                {overText(item.title || item.name, 15)}
+                            </Typography>
+
+                            <Typography className={`pb-4 d-flex align-items-center`}>
+                                <PlayCircleIcon
+                                    className={styles.icon}
+                                    onClick={() => {
+                                        handleSlideClick(item);
+                                    }}
+                                />
+                                <Typography>{stringToDate(item.first_air_date)}</Typography>
+                            </Typography>
                         </Typography>
                     </Typography>
                 ))}
