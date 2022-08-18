@@ -4,24 +4,24 @@ export const overText = (params: string, length: number) => {
     return params.length > length ? params.slice(0, length - 1) + "..." : params;
 };
 
-export const stringToDate = (params: string) => {
-    if (params === undefined) {
+export const stringToDate = (time: string) => {
+    if (time === undefined) {
         return null;
     }
     const date = new Intl.DateTimeFormat("en-GB", {
         month: "short",
         day: "2-digit",
         year: "numeric",
-    }).format(new Date(params));
+    }).format(new Date(time));
     return String(date);
 };
 
-export const convertTime = (props: number) => {
+export const convertTime = (time: number) => {
     let data = "";
-    if (props <= 60) {
-        return (data = String(props) + "m");
+    if (time <= 60) {
+        return (data = String(time) + "m");
     }
-    data = String(Math.floor(props / 60)) + "h " + String(props % 60) + "m";
+    data = String(Math.floor(time / 60)) + "h " + String(time % 60) + "m";
     return data;
 };
 

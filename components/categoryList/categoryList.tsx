@@ -108,13 +108,15 @@ const CategoryList = (props: Props) => {
                             <Typography className={`${styles.genres} text-uppercase d-flex`}>
                                 {item.genre_ids.map((id, index) =>
                                     index < 2 ? (
-                                        <Typography key={id}>{getGenreById(id)}</Typography>
+                                        <Typography key={id} className="fs-6">
+                                            {getGenreById(id)}
+                                        </Typography>
                                     ) : null,
                                 )}
                             </Typography>
 
-                            <Typography className="fs-3 ">
-                                {overText(item.title || item.name, 15)}
+                            <Typography className={`fs-1 overflow-hidden ${styles.name}`}>
+                                {item.name || item.title}
                             </Typography>
 
                             <Typography className={`pb-4 d-flex align-items-center`}>
@@ -124,7 +126,9 @@ const CategoryList = (props: Props) => {
                                         handleSlideClick(item);
                                     }}
                                 />
-                                <Typography>{stringToDate(item.first_air_date)}</Typography>
+                                <Typography className="fs-5">
+                                    {stringToDate(item.first_air_date)}
+                                </Typography>
                             </Typography>
                         </Typography>
                     </Typography>

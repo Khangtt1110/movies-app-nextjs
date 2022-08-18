@@ -1,0 +1,16 @@
+@use '../../styles/' as *;
+
+.genre {
+    font-family: $font-family  !important;
+    color: $main-color;
+}
+
+.name {
+    max-height: 57px;
+    text-align: left;
+
+    &:hover {
+        color: $main-color;
+        cursor: pointer;
+    }
+}

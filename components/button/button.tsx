@@ -7,7 +7,7 @@ type Props = {
 
 const Button = (props: Props) => {
     return (
-        <button onClick={props.onClick} className={`px-5 py-3 ${styles.button}`}>
+        <button onClick={props.onClick} className={`px-5 py-3 fs-4 ${styles.button}`}>
             {props.text}
         </button>
     );

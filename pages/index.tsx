@@ -2,18 +2,21 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import CategoryList from "../components/categoryList/categoryList";
 
+import { Typography } from "@mui/material";
+import Script from "next/script";
 import { useEffect, useState } from "react";
+import Button from "../components/button";
+import CategoryListType from "../components/categoryListType";
 import Slice from "../components/slice";
-import { Category, CategoryData, Genres, MovieType, TvShowType, Type } from "../models";
+import { Category, CategoryData, MovieType, TvShowType, Type } from "../models";
 import getCategoryDetail from "./api/categoryApi";
 import styles from "./home.module.scss";
-import Script from "next/script";
-import { Typography } from "@mui/material";
-import categoryApi from "./api/categoryApi";
+import { useRouter } from "next/router";
 const Home: NextPage = () => {
     const [sliceData, setSliceData] = useState<CategoryData[]>();
     const [category, setCategory] = useState<string>(Category.movie);
     const [type, setType] = useState<Type>(MovieType.upcoming);
+    const router = useRouter();
     // const [genres, setGenres] = useState<Genres>();
 
     // Get 10 feature movies to set slice
@@ -27,16 +30,15 @@ const Home: NextPage = () => {
                 setSliceData(response.results.slice(0, 3));
             };
 
-            // const getGenres = async () => {
-            //     const response = await categoryApi.getGenres();
-            //     setGenres(response);
-            // };
-            // getGenres();
             getList();
         } catch (error) {
             console.log("Error Fetch Slice API");
         }
     }, [category, type]);
+
+    const handleRedirectClick = (cate: string) => {
+        router.push(`/${cate}`);
+    };
 
     return (
         <div>
@@ -60,38 +62,50 @@ const Home: NextPage = () => {
                 <div className={styles.container}>
                     {sliceData && <Slice data={sliceData} cate={category} />}
                     <div className={`${styles.wrapper}`}>
-                        <div className="container">
-                            <Typography className="pt-5 text-uppercase text-secondary">
+                        <div className={`container py-5 mb-5 ${styles.tvShow}`}>
+                            <Typography className="fs-5 pt-5 text-uppercase text-secondary">
                                 Online Steaming
                             </Typography>
-                            <Typography className="fs-1">Watch Shows Online</Typography>
+                            <Typography className="display-4 pb-3">Watch Shows Online</Typography>
                             <CategoryList cate={Category.tv} type={TvShowType.top_rated} />
                         </div>
-                        {/* <CategoryList
-                            title="Tv Show Trending"
-                            cate={Category.tv}
-                            type={TvShowType.popular}
-                        />
-                        <CategoryList
-                            title="Top Rated Movies"
-                            cate={Category.movie}
-                            type={MovieType.top_rated}
-                        />
-                        <CategoryList
-                            title="Top Rated Tv Shows"
-                            cate={Category.tv}
-                            type={TvShowType.top_rated}
-                        />
-                        <CategoryList
-                            title="Featured Movies"
-                            cate={Category.movie}
-                            type={MovieType.upcoming}
-                        />
-                        <CategoryList
-                            title="On The Air"
-                            cate={Category.tv}
-                            type={TvShowType.on_the_air}
-                        /> */}
+
+                        <div className="container-fluid py-5 bg-dark text-center">
+                            <Typography className="fs-5 pt-5 text-uppercase text-secondary">
+                                FIND ANYWHERE ELSE
+                            </Typography>
+                            <Typography className="display-4 pb-3 text-white">
+                                Movies For You
+                            </Typography>
+                            <CategoryListType
+                                cate={Category.movie}
+                                type={MovieType.popular}
+                                textColor="white"
+                            />
+                            <Button
+                                text="Browse All Movies"
+                                onClick={() => {
+                                    handleRedirectClick(Category.movie);
+                                }}
+                            />
+                        </div>
+                        <div className="container-fluid py-5 text-center">
+                            <Typography className="fs-5 pt-5 text-uppercase text-secondary">
+                                FIND ANYWHERE ELSE
+                            </Typography>
+                            <Typography className="display-4 pb-3 ">Tv Shows For You</Typography>
+                            <CategoryListType
+                                cate={Category.tv}
+                                type={TvShowType.on_the_air}
+                                textColor="black"
+                            />
+                            <Button
+                                text="Browse All Tv Shows"
+                                onClick={() => {
+                                    handleRedirectClick(Category.tv);
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </main>

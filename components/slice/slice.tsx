@@ -139,12 +139,14 @@ const Slice = (props: Props) => {
                                 >
                                     {item.genre_ids.map((id, index) =>
                                         index < 3 ? (
-                                            <Typography key={id}>{getGenreById(id)}</Typography>
+                                            <Typography key={id} className="fs-4">
+                                                {getGenreById(id)}
+                                            </Typography>
                                         ) : null,
                                     )}
                                 </Typography>
                             </Typography>
-                            <Typography className="col-md-12 col-lg-6 my-3">
+                            <Typography className="col-md-12 col-lg-6 my-3 fs-5">
                                 {overText(item.overview, 200)}
                             </Typography>
 
